@@ -52,6 +52,11 @@ public class GameManager : MonoBehaviour
         _enemyTemplates = EnemyTemplateData.ToEnemyTemplates(_enemySkillTemplates);
         _roundUpgradeTemplates = RoundUpgradeTemplateData.ToRoundUpgradeTemplates();
 
+        if (!_battleManager.GameStarted)
+        {
+            _battleManager.Initialize();
+        }
+
         _machines.Clear();
         for (int i = 0; i < 2; i++)
         {
@@ -216,5 +221,10 @@ public class GameManager : MonoBehaviour
                 _machines[machineID].RemoveSymbol(removeIndex);
             }
         }
+    }
+
+    public void RoundUpgrade(int round, int upgradeGrade)
+    {
+        //pass
     }
 }

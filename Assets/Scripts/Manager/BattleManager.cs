@@ -4,6 +4,8 @@ namespace OnCloud7
 {
     public class BattleManager : MonoBehaviour
     {
+        private bool _gameStarted = false;
+        public bool GameStarted => _gameStarted;
         /// <summary>
         /// 몇 라운드인가? (1 ~ 7)
         /// </summary>
@@ -38,7 +40,7 @@ namespace OnCloud7
         
         /*
          * BattleManager TODO:
-         * 1. BattleManager.Initialize() 호출
+         * 1. BattleManager.Initialize() 호출 -> Complete
          * 2. 깨달음 선택 후 LoadNextRound() 호출하며 다음 라운드 준비 (UI도 변경)
          * 3. 현재 남은 체력 등의 정보들을 UI에 표시
          * 4. Roll()의 결과로 나온 CheckResult()의 gains들을 BattleManager에 넘겨서 수치 변동에 반영할 수 있도록
@@ -49,14 +51,20 @@ namespace OnCloud7
 
         public void Initialize()
         {
+            _gameStarted = true;
             _round = 0;
             _playerHealth = 100;
+            GameManager.Instance.RoundUpgrade(0, 1);
             LoadNextRound();
         }
 
         public void LoadNextRound()
         {
             _enemyTemplate = GameManager.Instance.EnemyTemplates[_round];
+            if (_round > 0)
+            {
+                GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
+            }
             _round++;
             _enemyCurrentHealth = _enemyTemplate.Health;
             _upgradePoint = 0;
