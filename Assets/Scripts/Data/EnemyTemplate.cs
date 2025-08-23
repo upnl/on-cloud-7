@@ -15,6 +15,9 @@ namespace OnCloud7
         [ReadOnly] public int Health;
         [ReadOnly] public int SkillID1;
         [ReadOnly] public int SkillID2;
+        [ReadOnly] public int SkillID3;
+        [ReadOnly] public int SkillID4;
+        [ReadOnly] public int SkillID5;
 
         private List<EnemySkillTemplate> skills;
         
@@ -34,6 +37,18 @@ namespace OnCloud7
                 }
 
                 if (skillTemplate.ID == SkillID2 && SkillID2 >= 0)
+                {
+                    skills.Add(skillTemplate);
+                }
+                if (skillTemplate.ID == SkillID3 && SkillID3 >= 0)
+                {
+                    skills.Add(skillTemplate);
+                }
+                if (skillTemplate.ID == SkillID4 && SkillID4 >= 0)
+                {
+                    skills.Add(skillTemplate);
+                }
+                if (skillTemplate.ID == SkillID5 && SkillID5 >= 0)
                 {
                     skills.Add(skillTemplate);
                 }
@@ -64,6 +79,24 @@ namespace OnCloud7
                 if (SkillID2 >= 0 && skillIndex < skills.Count)
                 {
                     sb.Append("Skill2: ");
+                    sb.AppendLine(skills[skillIndex].Name);
+                    skillIndex++;
+                }
+                if (SkillID3 >= 0 && skillIndex < skills.Count)
+                {
+                    sb.Append("Skill3: ");
+                    sb.AppendLine(skills[skillIndex].Name);
+                    skillIndex++;
+                }
+                if (SkillID4 >= 0 && skillIndex < skills.Count)
+                {
+                    sb.Append("Skill4: ");
+                    sb.AppendLine(skills[skillIndex].Name);
+                    skillIndex++;
+                }
+                if (SkillID5 >= 0 && skillIndex < skills.Count)
+                {
+                    sb.Append("Skill5: ");
                     sb.AppendLine(skills[skillIndex].Name);
                     skillIndex++;
                 }

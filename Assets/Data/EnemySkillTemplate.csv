@@ -1,4 +1,4 @@
-ID	Cooltime	MinDamage	MaxDamage	Name	Description
-0	0	2	3	윙윙	온몸을 전율시키는 짜릿한 소리이다.
-2	0	0	0	큰 호흡	뭔가 준비하고 있는 모양인데...?
-3	0	9	12	노랫소리	귀를 막아! 아니면 정신을 잃을 거야!
+ID	MinDamage	MaxDamage	Name	Description
+0	2	3	윙윙	온몸을 전율시키는 짜릿한 소리이다.
+1	0	0	큰 호흡	뭔가 준비하고 있는 모양인데...?
+2	9	12	노랫소리	귀를 막아! 아니면 정신을 잃을 거야!

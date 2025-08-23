@@ -8,16 +8,16 @@ namespace OnCloud7
     {
         private int _id;
         public int ID => _id;
-        private bool _isNormal;
+        private SymbolTemplate.SymbolType _type;
         private int _level;
         public int Level => _level;
         private string _name;
         private string _description;
 
-        public SymbolModel(int id, bool isNormal, int level, string name, string description)
+        public SymbolModel(int id, SymbolTemplate.SymbolType type, int level, string name, string description)
         {
             _id = id;
-            _isNormal = isNormal;
+            _type = type;
             _level = level;
             _name = name;
             _description = description;
@@ -26,7 +26,7 @@ namespace OnCloud7
         public SymbolModel(SymbolTemplate symbolTemplate)
         {
             _id = symbolTemplate.ID;
-            _isNormal = symbolTemplate.IsNormal;
+            _type = symbolTemplate.Type;
             _level = symbolTemplate.Level;
             _name = symbolTemplate.Name;
             _description = symbolTemplate.Description;

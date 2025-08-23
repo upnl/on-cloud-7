@@ -8,13 +8,11 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private TextAsset EnemySkillTemplateData;
     [SerializeField] private TextAsset EnemyTemplateData;
-    [SerializeField] private TextAsset RewardTemplateData;
     [SerializeField] private TextAsset RoundUpgradeTemplateData;
     [SerializeField] private TextAsset SymbolTemplateData;
 
     private List<EnemySkillTemplate> _enemySkillTemplates;
     private List<EnemyTemplate> _enemyTemplates;
-    private List<RewardTemplate> _rewardTemplates;
     private List<RoundUpgradeTemplate> _roundUpgradeTemplates;
     private List<SymbolTemplate> _symbolTemplates;
     
@@ -31,7 +29,6 @@ public class GameManager : MonoBehaviour
 
         _enemySkillTemplates = EnemySkillTemplateData.ToEnemySkillTemplates();
         _enemyTemplates = EnemyTemplateData.ToEnemyTemplates(_enemySkillTemplates);
-        _rewardTemplates = RewardTemplateData.ToRewardTemplates();
         _roundUpgradeTemplates = RoundUpgradeTemplateData.ToRoundUpgradeTemplates();
         _symbolTemplates = SymbolTemplateData.ToSymbolTemplates();
     }

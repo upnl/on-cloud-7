@@ -8,8 +8,9 @@ namespace OnCloud7
     [Serializable]
     public class SymbolTemplate : IDataTemplate
     {
+        public enum SymbolType { Normal, Change, Add, Enchant, Remove, Random }
         [ReadOnly] public int ID;
-        [ReadOnly] public bool IsNormal;
+        [ReadOnly] public SymbolType Type;
         [ReadOnly] public int Level;
         [ReadOnly] public string Name;
         [ReadOnly] public string Description;
@@ -28,8 +29,8 @@ namespace OnCloud7
                 sb.AppendLine(ID);
                 sb.Append("Name: ");
                 sb.AppendLine(Name);
-                sb.Append("IsNormal");
-                sb.AppendLine(IsNormal);
+                sb.Append("Type: ");
+                sb.AppendLine(Type);
                 sb.Append("Level: ");
                 sb.AppendLine(Level);
                 sb.Append("Description: ");
