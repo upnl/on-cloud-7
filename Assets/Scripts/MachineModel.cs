@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using OnCloud7;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
+
 
 public class MachineModel
 {
@@ -12,6 +14,10 @@ public class MachineModel
     public List<SymbolModel> SymbolPool => _symbolPool;
     private List<SymbolModel> _result = new List<SymbolModel>();
     public List<SymbolModel> Result => _result;
+    public SymbolView symbolPrefab;
+
+    private SlotView _slotView;
+
     
 
     public void Initialize()
@@ -37,6 +43,7 @@ public class MachineModel
             _result.Add(_symbolPool[index]);
             _symbolPool.RemoveAt(index);
         }
+        GameManager.Instance.SymbolsRender(_result);
         CheckResult(_result);
         _symbolPool.AddRange(_result);
         _symbolPool.Sort();
@@ -50,5 +57,8 @@ public class MachineModel
         //Check Bingos (3 rows, 3 columns, 2 diagonals)
         //Send gain values
     }
-    
+
+
+
+
 }

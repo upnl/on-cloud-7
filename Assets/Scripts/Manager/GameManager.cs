@@ -21,9 +21,13 @@ public class GameManager : MonoBehaviour
     private List<MachineModel> _machines = new List<MachineModel>();
     [SerializeField]
     private List<MachineView> _machineViews;
+    
+    [SerializeField]
+    private SlotView _slotView;
 
     [SerializeField] private GameObject _machineChoice;
     [SerializeField] private GameObject _machineLaunch;
+    private int curMachineIndex;
 
     void Awake()
     {
@@ -53,9 +57,22 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void StartSpin()
+    public void StartSpin(int curMachineIndex)
     {
+        this.curMachineIndex = curMachineIndex;
         _machineChoice.SetActive(false);
         _machineLaunch.SetActive(true);
+        _slotView.Initialize(_machines[curMachineIndex]);
+        Spin();
+    }
+
+    public void Spin()
+    {
+        _machines[curMachineIndex].Roll();
+    }
+
+    public void SymbolsRender(List<SymbolModel> result)
+    {
+        _slotView.SymbolsRender(result);
     }
 }
