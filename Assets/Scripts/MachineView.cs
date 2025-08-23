@@ -1,16 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineView : MonoBehaviour
+namespace OnCloud7
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public class MachineView : MonoBehaviour
     {
-        
+        private List<SymbolModel> _symbols = new List<SymbolModel>();
+        private MachineModel _machineModel;
+
+        public void Initialize(MachineModel machineModel)
+        {
+            _machineModel = machineModel;
+        }
+
     }
 }
