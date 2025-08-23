@@ -7,18 +7,23 @@ namespace OnCloud7
     public class SymbolModel : IComparable<SymbolModel>
     {
         private int _id;
-        public int ID => _id;
         private SymbolTemplate.SymbolType _type;
-        private int _level;
-        public int Level => _level;
+        private bool _isImmutable;
+        private int _arg0, _arg1, _arg2, _arg3;
         private string _name;
         private string _description;
+        
+        public int ID => _id;
 
-        public SymbolModel(int id, SymbolTemplate.SymbolType type, int level, string name, string description)
+        public SymbolModel(int id, SymbolTemplate.SymbolType type, bool isImmutable, int arg0, int arg1, int arg2, int arg3, string name, string description)
         {
             _id = id;
             _type = type;
-            _level = level;
+            _isImmutable = isImmutable;
+            _arg0 = arg0;
+            _arg1 = arg1;
+            _arg2 = arg2;
+            _arg3 = arg3;
             _name = name;
             _description = description;
         }
@@ -27,7 +32,11 @@ namespace OnCloud7
         {
             _id = symbolTemplate.ID;
             _type = symbolTemplate.Type;
-            _level = symbolTemplate.Level;
+            _isImmutable = symbolTemplate.IsImmutable;
+            _arg0 = symbolTemplate.Arg0;
+            _arg1 = symbolTemplate.Arg1;
+            _arg2 = symbolTemplate.Arg2;
+            _arg3 = symbolTemplate.Arg3;
             _name = symbolTemplate.Name;
             _description = symbolTemplate.Description;
         }
@@ -42,14 +51,6 @@ namespace OnCloud7
             else if (this.ID > other.ID)
             {
                 return 1;
-            }
-            else if (this.Level < other.Level)
-            {
-                return 1;
-            }
-            else if (this.Level > other.Level)
-            {
-                return -1;
             }
             else
             {

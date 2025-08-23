@@ -48,12 +48,18 @@ namespace OnCloud7
                         switch (token)
                         {
                             case "ID":
-                            case "Level":
+                            case "Arg0":
+                            case "Arg1":
+                            case "Arg2":
+                            case "Arg3":
                                 typeConverter.Add(i, str =>
                                 {
                                     if (string.IsNullOrEmpty(str)) return -1;
                                     return int.Parse(str);
                                 });
+                                break;
+                            case "IsImmutable":
+                                typeConverter.Add(i, str => bool.Parse(str));
                                 break;
                             case "Name":
                             case "Description":
