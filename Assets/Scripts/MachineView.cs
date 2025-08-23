@@ -12,6 +12,7 @@ namespace OnCloud7
 
         public SymbolView symbolPrefab;
         public ChangeSymbolView changeSymbolPrefab;
+        public AddSymbolView addSymbolPrefab;
         [SerializeField] private Button _chooseButton;
 
         public void Initialize(MachineModel machineModel)
@@ -33,10 +34,18 @@ namespace OnCloud7
                 }
                 else if (curSymbol.Type == SymbolTemplate.SymbolType.Change)
                 {
-                    ChangeSymbolView sv = Instantiate(changeSymbolPrefab, transform);
-                    sv.Initialize(curSymbol);
-                    _symbols.Add(sv);
+                    ChangeSymbolView csv = Instantiate(changeSymbolPrefab, transform);
+                    csv.Initialize(curSymbol);
+                    _symbols.Add(csv);
                 }
+                else if (curSymbol.Type == SymbolTemplate.SymbolType.Add)
+                {
+                    AddSymbolView asv = Instantiate(addSymbolPrefab, transform);
+                    asv.Initialize(curSymbol);
+                    _symbols.Add(asv);
+                    
+                }
+                
 
             }
         }

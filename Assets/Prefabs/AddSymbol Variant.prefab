@@ -166,6 +166,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6150815910408438875, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c5d87b7254a97454ea33242d4b6a81f1, type: 3}
+    - target: {fileID: 6150815910408438875, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8621782110487749783, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -258,7 +266,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3272170152907643797, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2256816503142720496}
+      addedObject: {fileID: 6993274491070480122}
   m_SourcePrefab: {fileID: 100100000, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
 --- !u!224 &3088652259567470421 stripped
 RectTransform:
@@ -270,7 +278,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3272170152907643797, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
   m_PrefabInstance: {fileID: 6736155769827926978}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2256816503142720496
+--- !u!114 &6993274491070480122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,6 +287,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8075715618788653143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f240b087f255541bb045b6b6d3cd3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bd7fdd082f4e6348b64bd6203509947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _symbolIcon: {fileID: 0}
+  _symbolSprites: []
+  _addSymbol: {fileID: 8527298137210866587}
+  _sprites:
+  - {fileID: 21300000, guid: 3973ec99d856a2d4f95876d6813f5c22, type: 3}
+  - {fileID: 21300000, guid: bd10efeaf7d0a684c9ac29ab25150713, type: 3}
+  - {fileID: 21300000, guid: a948af7506777e4479dd2e2b6df9c227, type: 3}
+  - {fileID: 21300000, guid: feef1e86f92ddaf44b0be587c0bc005d, type: 3}
+  - {fileID: 21300000, guid: 850707efaa0ea95418caeeec981c12a0, type: 3}

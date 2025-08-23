@@ -38,13 +38,20 @@ public class MachineModel
         }
         
         //temp change symbols
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 7; i++)
         {
             _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 8]));
         }
         
+        //temp add symbols
+        for (int i = 0; i < 7; i++)
+        {
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[50 + i]));
+        }
+        
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
+        
     }
     
     public void Roll()
