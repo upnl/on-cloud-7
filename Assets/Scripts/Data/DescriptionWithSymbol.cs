@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Text;
 
 namespace OnCloud7
 {
@@ -37,7 +38,7 @@ namespace OnCloud7
         {
             if (!GameManager.Instance || GameManager.Instance.SymbolTemplates == null)
             {
-                return symbolIDToName.GetValueOrDefault(symbolID, "?");
+                return symbolIDToName.GetValueOrDefault(symbolID, ZString.Concat(symbolID, "?"));
             }
 
             foreach (var symbol in GameManager.Instance.SymbolTemplates)
@@ -48,7 +49,7 @@ namespace OnCloud7
                 }
             }
             
-            return symbolIDToName.GetValueOrDefault(symbolID, "?");
+            return symbolIDToName.GetValueOrDefault(symbolID, ZString.Concat(symbolID, "?"));
         }
     }
 }

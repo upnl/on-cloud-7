@@ -47,7 +47,7 @@ namespace OnCloud7
 
         public override string ToString()
         {
-            using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(true))
+            using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(false))
             {
                 sb.Append("[SymbolTemplate] ");
                 sb.Append("ID: ");
