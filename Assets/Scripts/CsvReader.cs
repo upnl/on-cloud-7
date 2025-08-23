@@ -153,7 +153,7 @@ namespace OnCloud7
                                     continue;
                                 }
                                 var duplicated = new SymbolTemplate();
-                                duplicated.CloneWithArgValues(original, i0, i1, i2, i3);
+                                duplicated.CloneWithArgValues(original, original.Arg0[i0], original.Arg1[i1], original.Arg2[i2], original.Arg3[i3]);
                                 duplicated.Initialize();
                                 duplicatedTemplates.Add(duplicated);
                             }
@@ -514,7 +514,7 @@ namespace OnCloud7
                                 for (int i4 = 0; i4 < original.Arg4.Count; i4++)
                                 {
                                     var duplicated = new RoundUpgradeTemplate();
-                                    duplicated.CloneWithArgValues(original, i0, i1, i2, i3, i4);
+                                    duplicated.CloneWithArgValues(original, original.Arg0[i0], original.Arg1[i1], original.Arg2[i2], original.Arg3[i3], original.Arg4[i4]);
                                     duplicated.Initialize();
                                     duplicatedTemplates.Add(duplicated);
                                 }

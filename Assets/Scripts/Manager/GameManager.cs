@@ -38,10 +38,10 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
 
+        _symbolTemplates = SymbolTemplateData.ToSymbolTemplates();
         _enemySkillTemplates = EnemySkillTemplateData.ToEnemySkillTemplates();
         _enemyTemplates = EnemyTemplateData.ToEnemyTemplates(_enemySkillTemplates);
         _roundUpgradeTemplates = RoundUpgradeTemplateData.ToRoundUpgradeTemplates();
-        _symbolTemplates = SymbolTemplateData.ToSymbolTemplates();
 
         _machines.Clear();
         for (int i = 0; i < 2; i++)
