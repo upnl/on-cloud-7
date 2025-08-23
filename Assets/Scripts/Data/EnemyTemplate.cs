@@ -13,13 +13,10 @@ namespace OnCloud7
         [ReadOnly] public string Name;
         [ReadOnly] public bool IsBoss;
         [ReadOnly] public int Health;
-        [ReadOnly] public int SkillID1;
-        [ReadOnly] public int SkillID2;
-        [ReadOnly] public int SkillID3;
-        [ReadOnly] public int SkillID4;
-        [ReadOnly] public int SkillID5;
+        [ReadOnly] public List<int> Skills;
+        [ReadOnly] public string Description;
 
-        private List<EnemySkillTemplate> skills;
+        private List<EnemySkillTemplate> skillSequence;
         
         public void Initialize()
         {
@@ -28,39 +25,24 @@ namespace OnCloud7
 
         public void Initialize(List<EnemySkillTemplate> skillTemplates)
         {
-            skills = new List<EnemySkillTemplate>();
-            foreach (var skillTemplate in skillTemplates)
+            skillSequence = new List<EnemySkillTemplate>();
+            foreach (var skillID in Skills)
             {
-                if (skillTemplate.ID == SkillID1 && SkillID1 >= 0)
+                if (skillID >= 0 && skillID < skillTemplates.Count)
                 {
-                    skills.Add(skillTemplate);
-                }
-
-                if (skillTemplate.ID == SkillID2 && SkillID2 >= 0)
-                {
-                    skills.Add(skillTemplate);
-                }
-                if (skillTemplate.ID == SkillID3 && SkillID3 >= 0)
-                {
-                    skills.Add(skillTemplate);
-                }
-                if (skillTemplate.ID == SkillID4 && SkillID4 >= 0)
-                {
-                    skills.Add(skillTemplate);
-                }
-                if (skillTemplate.ID == SkillID5 && SkillID5 >= 0)
-                {
-                    skills.Add(skillTemplate);
+                    skillSequence.Add(skillTemplates[skillID]);
                 }
             }
+
             Debug.Log(this.ToString());
         }
 
         public override string ToString()
         {
+            string str;
             using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(true))
             {
-                sb.AppendLine("[EnemyTemplate] ");
+                sb.Append("[EnemyTemplate] ");
                 sb.Append("ID: ");
                 sb.AppendLine(ID);
                 sb.Append("Name: ");
@@ -69,40 +51,17 @@ namespace OnCloud7
                 sb.AppendLine(IsBoss);
                 sb.Append("Health: ");
                 sb.AppendLine(Health);
-                int skillIndex = 0;
-                if (SkillID1 >= 0 && skillIndex < skills.Count)
+                sb.Append("Skills: [");
+                foreach (var skill in skillSequence)
                 {
-                    sb.Append("Skill1: ");
-                    sb.AppendLine(skills[skillIndex].Name);
-                    skillIndex++;
-                }
-                if (SkillID2 >= 0 && skillIndex < skills.Count)
-                {
-                    sb.Append("Skill2: ");
-                    sb.AppendLine(skills[skillIndex].Name);
-                    skillIndex++;
-                }
-                if (SkillID3 >= 0 && skillIndex < skills.Count)
-                {
-                    sb.Append("Skill3: ");
-                    sb.AppendLine(skills[skillIndex].Name);
-                    skillIndex++;
-                }
-                if (SkillID4 >= 0 && skillIndex < skills.Count)
-                {
-                    sb.Append("Skill4: ");
-                    sb.AppendLine(skills[skillIndex].Name);
-                    skillIndex++;
-                }
-                if (SkillID5 >= 0 && skillIndex < skills.Count)
-                {
-                    sb.Append("Skill5: ");
-                    sb.AppendLine(skills[skillIndex].Name);
-                    skillIndex++;
+                    sb.Append(skill.Name);
+                    sb.Append(", ");
                 }
 
-                return sb.ToString();
+                str = sb.ToString();
             }
+
+            return ZString.Concat(str.Trim().TrimEnd(','), "]\n");
         }
     }
 }

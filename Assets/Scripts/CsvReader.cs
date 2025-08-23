@@ -304,11 +304,6 @@ namespace OnCloud7
                         {
                             case "ID":
                             case "Health":
-                            case "SkillID1":
-                            case "SkillID2":
-                            case "SkillID3":
-                            case "SkillID4":
-                            case "SkillID5":
                                 typeConverter.Add(i, str =>
                                 {
                                     if (string.IsNullOrEmpty(str)) return -1;
@@ -326,6 +321,20 @@ namespace OnCloud7
                             case "Name":
                             case "Description":
                                 typeConverter.Add(i, str => str.Trim('"'));
+                                break;
+                            case "Skills":
+                                typeConverter.Add(i, str =>
+                                {
+                                    if (string.IsNullOrEmpty(str)) return NullArg;
+                                    List<int> values = new List<int>();
+                                    
+                                    string[] intTokens = str.TrimStart('[').TrimEnd(']').Split(',');
+                                    foreach (string intToken in intTokens)
+                                    {
+                                        values.Add(int.Parse(intToken));
+                                    }
+                                    return values;
+                                });
                                 break;
                             default:
                                 Debug.LogError(ZString.Concat("CSV Error: 알 수 없는 ", i, "번째 타입 ", tokens[i]));

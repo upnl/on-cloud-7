@@ -14,7 +14,7 @@ namespace OnCloud7
             symbolIDToName.Add(-1, string.Empty);
             symbolIDToName.Add(0, "눈");
             symbolIDToName.Add(1, "클라우드");
-            symbolIDToName.Add(2, "상승기류");
+            symbolIDToName.Add(2, "상승 기류");
             symbolIDToName.Add(777, "임의의 기본");
             symbolIDToName.Add(7777, "임의의 특수");
         }

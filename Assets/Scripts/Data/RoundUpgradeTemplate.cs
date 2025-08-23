@@ -53,7 +53,7 @@ namespace OnCloud7
         {
             using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(false))
             {
-                sb.AppendLine("[RoundUpgradeTemplate] ");
+                sb.Append("[RoundUpgradeTemplate] ");
                 sb.Append("ID: ");
                 sb.AppendLine(ID);
                 sb.Append("Name: ");

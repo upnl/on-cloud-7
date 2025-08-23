@@ -23,7 +23,7 @@ namespace OnCloud7
         {
             using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(true))
             {
-                sb.AppendLine("[EnemySkillTemplate] ");
+                sb.Append("[EnemySkillTemplate] ");
                 sb.Append("ID: ");
                 sb.AppendLine(ID);
                 sb.Append("Name: ");
