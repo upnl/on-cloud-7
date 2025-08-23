@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OnCloud7;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -35,6 +36,7 @@ public class MachineModel
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 3]));
             }
         }
+        
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
     }
@@ -62,6 +64,22 @@ public class MachineModel
         {
             if (!Gains.ContainsKey(symbol.ID))
             {
+                if (symbol.ID == 7)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (Gains.ContainsKey(i))
+                        {
+                            Gains[i] += 1;
+                        }
+                        else
+                        {
+                            Gains.Add(i, 1);
+                        }
+                    }
+
+                    continue;
+                }
                 if (symbol.ID >= 3 && symbol.ID <= 5)
                 {
                     if (!Gains.ContainsKey(symbol.ID - 3))
@@ -94,7 +112,13 @@ public class MachineModel
         foreach (int[] line in BingoLines)
         {
             int CheckResult = CheckBingo(result, line);
-            if (CheckResult >= 0)
+            if (CheckResult == 7)
+            {
+                Bingos[0]++;
+                Bingos[1]++;
+                Bingos[2]++;
+            }
+            else if (CheckResult >= 0)
             {
                 Bingos[CheckResult]++;
             }
@@ -124,7 +148,11 @@ public class MachineModel
             if (curSymbol == -1)
             {
                 curSymbol = result[index].ID;
-                if (curSymbol >= 6)
+                if (curSymbol == 7)
+                {
+                    curSymbol = 7; //Do Nothing
+                }
+                else if (curSymbol >= 6)
                 {
                     return -1;
                 }
@@ -136,7 +164,24 @@ public class MachineModel
             
             else if (curSymbol != result[index].ID)
             {
-                if (result[index].ID >= 3 && result[index].ID <= 5 && result[index].ID - 3 == curSymbol)
+                if (result[index].ID == 7)
+                {
+                    continue;
+                }
+                if (curSymbol == 7)
+                {
+                    if (result[index].ID >= 3 && result[index].ID <= 5)
+                    {
+                        curSymbol = result[index].ID - 3;
+                        continue;
+                    }
+                    else if (result[index].ID <= 2)
+                    {
+                        curSymbol = result[index].ID;
+                        continue;
+                    }
+                }
+                else if (result[index].ID >= 3 && result[index].ID <= 5 && result[index].ID - 3 == curSymbol)
                 {
                     continue;
                 }
