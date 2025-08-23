@@ -147,9 +147,11 @@ namespace OnCloud7
                             for (int i3 = 0; i3 < original.Arg3.Count; i3++)
                             {
                                 if (original.Type == SymbolTemplate.SymbolType.Change &&
-                                    original.Arg1[i1] == original.Arg3[i3])
+                                    original.Arg1[i1] == original.Arg3[i3] &&
+                                    original.Arg1[i1] < 100)
                                 {
                                     // 같은 문양으로 바꾸는 효과는 의미 없음.
+                                    // 단, 임의의 문양에서 임의의 문양으로는 바뀔 수 있음.
                                     continue;
                                 }
                                 var duplicated = new SymbolTemplate();
@@ -505,9 +507,11 @@ namespace OnCloud7
                             for (int i3 = 0; i3 < original.Arg3.Count; i3++)
                             {
                                 if (original.Type == RoundUpgradeTemplate.UpgradeType.Change &&
-                                    original.Arg1[i1] == original.Arg3[i3])
+                                    original.Arg1[i1] == original.Arg3[i3] &&
+                                    original.Arg1[i1] < 100)
                                 {
                                     // 같은 문양으로 바꾸는 효과는 의미 없음.
+                                    // 단, 임의의 문양에서 임의의 문양으로는 바뀔 수 있음.
                                     continue;
                                 }
 
