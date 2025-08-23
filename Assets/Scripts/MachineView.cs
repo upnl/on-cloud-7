@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace OnCloud7
 {
@@ -10,6 +11,8 @@ namespace OnCloud7
         private MachineModel _machineModel;
         
         public SymbolView symbolPrefab;
+        [SerializeField]
+        private Button _chooseButton;
 
         public void Initialize(MachineModel machineModel)
         {
@@ -23,5 +26,10 @@ namespace OnCloud7
 
         }
 
+        public void OnChooseMachine()
+        {
+            GameManager.Instance.StartSpin();
+        }
+        
     }
 }

@@ -209,6 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolPrefab: {fileID: 4716045518900101998, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+  _chooseButton: {fileID: 0}
 --- !u!114 &11692585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,6 +889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symbolPrefab: {fileID: 4716045518900101998, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+  _chooseButton: {fileID: 0}
 --- !u!114 &546463834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,7 +2052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 614, y: -301}
+  m_AnchoredPosition: {x: 614, y: -385}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240516278
@@ -2096,7 +2098,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1240516279}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11692584}
+        m_TargetAssemblyTypeName: OnCloud7.MachineView, Assembly-CSharp
+        m_MethodName: OnChooseMachine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1240516279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3368,7 +3382,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872285300}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3378,7 +3392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -62, y: -301}
+  m_AnchoredPosition: {x: -62, y: -385}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1872285302
@@ -3424,7 +3438,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1872285303}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 546463833}
+        m_TargetAssemblyTypeName: OnCloud7.MachineView, Assembly-CSharp
+        m_MethodName: OnChooseMachine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1872285303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3515,6 +3541,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
+      propertyPath: _machineChoice
+      value: 
+      objectReference: {fileID: 862117161}
+    - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
+      propertyPath: _machineLaunch
+      value: 
+      objectReference: {fileID: 1303296324}
     - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
       propertyPath: _machineViews.Array.size
       value: 2

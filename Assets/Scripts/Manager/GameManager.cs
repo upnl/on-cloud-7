@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<MachineView> _machineViews;
 
+    [SerializeField] private GameObject _machineChoice;
+    [SerializeField] private GameObject _machineLaunch;
+
     void Awake()
     {
         if (Instance != null)
@@ -50,9 +53,9 @@ public class GameManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartSpin()
     {
-        
+        _machineChoice.SetActive(false);
+        _machineLaunch.SetActive(true);
     }
 }
