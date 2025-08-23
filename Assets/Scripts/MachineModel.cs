@@ -38,20 +38,20 @@ public class MachineModel
         }
         
         //temp change symbols
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 3; i++)
         {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 8]));
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 10]));
         }
         
         //temp add symbols
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 3; i++)
         {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[50 + i]));
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[58 + i]));
         }
         //temp remove symbols
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 3; i++)
         {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[70 + i]));
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[78 + i]));
         }        
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
@@ -232,11 +232,22 @@ public class MachineModel
         {
             if (symbol.Type == SymbolTemplate.SymbolType.Change)
             {
+                Debug.Log("Change");
                 GameManager.Instance.ChangeRequest(symbol, symbol.Arg0);
             }
-            else if (symbol.Type == SymbolTemplate.SymbolType.Add && _symbolPool.Count < 48)
+            else if (symbol.Type == SymbolTemplate.SymbolType.Add)
             {
+                Debug.Log("Add");
                 GameManager.Instance.AddRequest(symbol, symbol.Arg0);
+            }
+            else if (symbol.Type == SymbolTemplate.SymbolType.Remove)
+            {
+                Debug.Log("Remove");
+                GameManager.Instance.RemoveRequest(symbol, symbol.Arg0);
+            }
+            else if (symbol.Type == SymbolTemplate.SymbolType.Random)
+            {
+                //pass
             }
         }
     }
