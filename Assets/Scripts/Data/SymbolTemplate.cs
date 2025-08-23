@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
 
-public class SymbolTemplate : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+namespace OnCloud7
+{
+    [Serializable]
+    public class SymbolTemplate : IDataTemplate
     {
-        
+        [ReadOnly] public int ID;
+        [ReadOnly] public bool IsNormal;
+        [ReadOnly] public int Level;
+        [ReadOnly] public string Name;
+        [ReadOnly] public string Description;
+
+        public void Initialize()
+        {
+            
+        }
     }
 }

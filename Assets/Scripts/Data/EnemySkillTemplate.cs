@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
 
-public class EnemySkillTemplate : MonoBehaviour
+namespace OnCloud7
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Serializable]
+    public class EnemySkillTemplate : IDataTemplate
     {
+        [ReadOnly] public int ID;
+        [ReadOnly] public int Cooltime;
+        [ReadOnly] public int MinDamage;
+        [ReadOnly] public int MaxDamage;
+        [ReadOnly] public string Name;
+        [ReadOnly] public string Description;
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Initialize()
+        {
+            
+        }
     }
 }
