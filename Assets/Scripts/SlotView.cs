@@ -30,6 +30,7 @@ namespace OnCloud7
             {
                 Destroy(_symbols[i].gameObject);
             }
+            _symbols.Clear();
             foreach (SymbolModel symbol in result)
             {
                 if (symbol.Type == SymbolTemplate.SymbolType.Normal || symbol.Type == SymbolTemplate.SymbolType.Random || symbol.Type == SymbolTemplate.SymbolType.Rainbow)

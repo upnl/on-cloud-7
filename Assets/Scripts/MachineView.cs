@@ -17,6 +17,7 @@ namespace OnCloud7
 
         public void Initialize(MachineModel machineModel)
         {
+            _symbols.Clear();
             _machineModel = machineModel;
             for (int i = 0; i < machineModel.SymbolPool.Count; i++)
             {
@@ -54,6 +55,14 @@ namespace OnCloud7
             {
                 GameManager.Instance.StartSpin(_machineModel.ID);
             }
+
+        public void CleanPool()
+        {
+            for (int i = 0; i < _symbols.Count; i++)
+            {
+                Destroy(_symbols[i].gameObject);
+            }
+        }
 
 
         

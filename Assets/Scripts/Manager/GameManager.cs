@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
 
     public void StartSpin(int curMachineIndex)
     {
+        for (int i = 0; i < _machines.Count; i++)
+        {
+            _machineViews[i].CleanPool();
+        }
         this.curMachineIndex = curMachineIndex;
         _machineChoice.SetActive(false);
         _machineLaunch.SetActive(true);
@@ -74,5 +78,16 @@ public class GameManager : MonoBehaviour
     public void SymbolsRender(List<SymbolModel> result)
     {
         _slotView.SymbolsRender(result);
+    }
+
+    public void BackToChoice()
+    {
+        _machineChoice.SetActive(true);
+        _machineLaunch.SetActive(false);
+        for (int i = 0; i < _machines.Count; i++)
+        {
+            _machineViews[i].Initialize(_machines[i]);
+        }
+
     }
 }

@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 683440243}
   - component: {fileID: 683440242}
   m_Layer: 5
-  m_Name: Launch
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Roll!
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 648015787a0293e42ac4bd86e5d0fca1, type: 2}
   m_sharedMaterial: {fileID: 5037562126233645974, guid: 648015787a0293e42ac4bd86e5d0fca1, type: 2}
@@ -3728,12 +3728,12 @@ GameObject:
   - component: {fileID: 2005337165}
   - component: {fileID: 2005337164}
   m_Layer: 5
-  m_Name: LaunchButton
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2005337163
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3800,7 +3800,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 775847724}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: Spin
+        m_MethodName: BackToChoice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
