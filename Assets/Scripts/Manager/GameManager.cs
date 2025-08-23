@@ -17,7 +17,18 @@ public class GameManager : MonoBehaviour
     private List<SymbolTemplate> _symbolTemplates;
     
     public List<SymbolTemplate> SymbolTemplates => _symbolTemplates;
+
+    private List<MachineModel> _machines = new List<MachineModel>();
+    [SerializeField]
+    private List<MachineView> _machineViews;
     
+    [SerializeField]
+    private SlotView _slotView;
+
+    [SerializeField] private GameObject _machineChoice;
+    [SerializeField] private GameObject _machineLaunch;
+    private int curMachineIndex;
+
     void Awake()
     {
         if (Instance != null)
@@ -31,11 +42,37 @@ public class GameManager : MonoBehaviour
         _enemyTemplates = EnemyTemplateData.ToEnemyTemplates(_enemySkillTemplates);
         _roundUpgradeTemplates = RoundUpgradeTemplateData.ToRoundUpgradeTemplates();
         _symbolTemplates = SymbolTemplateData.ToSymbolTemplates();
+
+        _machines.Clear();
+        for (int i = 0; i < 2; i++)
+        {
+            MachineModel machine = new MachineModel();
+            machine.Initialize();
+            _machines.Add(machine);
+            _machineViews[i].Initialize(machine);
+        }
+        
+        
+        
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartSpin(int curMachineIndex)
     {
-        
+        this.curMachineIndex = curMachineIndex;
+        _machineChoice.SetActive(false);
+        _machineLaunch.SetActive(true);
+        _slotView.Initialize(_machines[curMachineIndex]);
+        Spin();
+    }
+
+    public void Spin()
+    {
+        _machines[curMachineIndex].Roll();
+    }
+
+    public void SymbolsRender(List<SymbolModel> result)
+    {
+        _slotView.SymbolsRender(result);
     }
 }
