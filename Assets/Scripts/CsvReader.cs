@@ -65,7 +65,7 @@ namespace OnCloud7
                                 break;
                             case "Name":
                             case "Description":
-                                typeConverter.Add(i, str => str);
+                                typeConverter.Add(i, str => str.Trim('"'));
                                 break;
                             /*
                             case "List_Color":
@@ -218,7 +218,7 @@ namespace OnCloud7
                                 break;
                             case "Name":
                             case "Description":
-                                typeConverter.Add(i, str => str);
+                                typeConverter.Add(i, str => str.Trim('"'));
                                 break;
                             default:
                                 Debug.LogError(ZString.Concat("CSV Error: 알 수 없는 ", i, "번째 타입 ", tokens[i]));
@@ -323,7 +323,7 @@ namespace OnCloud7
                                 break;
                             case "Name":
                             case "Description":
-                                typeConverter.Add(i, str => str);
+                                typeConverter.Add(i, str => str.Trim('"'));
                                 break;
                             default:
                                 Debug.LogError(ZString.Concat("CSV Error: 알 수 없는 ", i, "번째 타입 ", tokens[i]));
@@ -363,7 +363,7 @@ namespace OnCloud7
                     }
                 }
 
-                enemyTemplate.Initialize();
+                enemyTemplate.Initialize(skillTemplates);
                 enemyTemplates.Add(enemyTemplate);
             }
 
@@ -417,7 +417,7 @@ namespace OnCloud7
                                 break;
                             case "Name":
                             case "Description":
-                                typeConverter.Add(i, str => str);
+                                typeConverter.Add(i, str => str.Trim('"'));
                                 break;
                             case "Type":
                                 typeConverter.Add(i, str =>
@@ -526,7 +526,7 @@ namespace OnCloud7
                                 break;
                             case "Name":
                             case "Description":
-                                typeConverter.Add(i, str => str);
+                                typeConverter.Add(i, str => str.Trim('"'));
                                 break;
                             case "Type":
                                 typeConverter.Add(i, str =>
