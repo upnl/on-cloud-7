@@ -7,11 +7,11 @@ namespace OnCloud7
 
     public class SymbolView : MonoBehaviour
     {
-        [SerializeField] private Image _symbolIcon;
-        private SymbolModel _symbolModel;
-        [SerializeField] private List<Sprite> _symbolSprites;
+        [SerializeField] protected Image _symbolIcon;
+        protected SymbolModel _symbolModel;
+        [SerializeField] protected List<Sprite> _symbolSprites;
 
-        public void Initialize(SymbolModel symbolModel)
+        public virtual void Initialize(SymbolModel symbolModel)
         {
             _symbolModel = symbolModel;
             _symbolIcon.sprite = _symbolSprites[symbolModel.ID];
