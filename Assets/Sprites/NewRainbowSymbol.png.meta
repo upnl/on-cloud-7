@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 016d7c56964f6b143ba2655acbb36213
+guid: 6987b68c3e0ab73409b85b0546550963
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7152476686707281313
-    second: CloudBasicSymbol_0
+      213: -2662496379899095719
+    second: NewRainbowSymbol_0
+  - first:
+      213: 7496316531801814740
+    second: NewRainbowSymbol_1
+  - first:
+      213: -7717722547970969009
+    second: NewRainbowSymbol_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,40 +102,71 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CloudBasicSymbol_0
+      name: NewRainbowSymbol_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 400
-        height: 400
+        x: 99
+        y: 535
+        width: 793
+        height: 484
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f52bc80595c4dbc90800000000000000
-      internalID: -7152476686707281313
+      spriteID: 955d95426a9ec0bd0800000000000000
+      internalID: -2662496379899095719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewRainbowSymbol_1
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 28
+        width: 419
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d67fe12b24480860800000000000000
+      internalID: 7496316531801814740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NewRainbowSymbol_2
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 98
+        width: 449
+        height: 417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f42fa2d9b3425e490800000000000000
+      internalID: -7717722547970969009
       vertices: []
       indices: 
       edges: []
@@ -138,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c84c8871e9c509d47ad28e60275c616d
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CloudBasicSymbol_0: -7152476686707281313
+      NewRainbowSymbol_0: -2662496379899095719
+      NewRainbowSymbol_1: 7496316531801814740
+      NewRainbowSymbol_2: -7717722547970969009
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
