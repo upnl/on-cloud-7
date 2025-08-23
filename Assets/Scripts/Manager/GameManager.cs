@@ -7,6 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
+    [SerializeField]
+    private BattleManager _battleManager;
+
+    public BattleManager BattleManager => _battleManager;
+    
     [SerializeField] private TextAsset EnemySkillTemplateData;
     [SerializeField] private TextAsset EnemyTemplateData;
     [SerializeField] private TextAsset RoundUpgradeTemplateData;
@@ -18,6 +23,9 @@ public class GameManager : MonoBehaviour
     private List<SymbolTemplate> _symbolTemplates;
     
     public List<SymbolTemplate> SymbolTemplates => _symbolTemplates;
+    public List<EnemyTemplate> EnemyTemplates => _enemyTemplates;
+    public List<EnemySkillTemplate> EnemySkillTemplates => _enemySkillTemplates;
+    public List<RoundUpgradeTemplate> RoundUpgradeTemplates => _roundUpgradeTemplates;
 
     private List<MachineModel> _machines = new List<MachineModel>();
     [SerializeField]

@@ -94,22 +94,22 @@ public class MachineModel
 
     public void CheckResult(List<SymbolModel> result)
     {
-        Dictionary<int, int> Gains = new Dictionary<int, int>();
+        Dictionary<int, int> gains = new Dictionary<int, int>();
         foreach (SymbolModel symbol in result)
         {
-            if (!Gains.ContainsKey(symbol.ID))
+            if (!gains.ContainsKey(symbol.ID))
             {
                 if (symbol.ID == 7)
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        if (Gains.ContainsKey(i))
+                        if (gains.ContainsKey(i))
                         {
-                            Gains[i] += 1;
+                            gains[i] += 1;
                         }
                         else
                         {
-                            Gains.Add(i, 1);
+                            gains.Add(i, 1);
                         }
                     }
 
@@ -117,23 +117,23 @@ public class MachineModel
                 }
                 if (symbol.ID >= 3 && symbol.ID <= 5)
                 {
-                    if (!Gains.ContainsKey(symbol.ID - 3))
+                    if (!gains.ContainsKey(symbol.ID - 3))
                     {
-                        Gains.Add(symbol.ID - 3, 1);
+                        gains.Add(symbol.ID - 3, 1);
                     }
                     else
                     {
-                        Gains[symbol.ID - 3] += 1;
+                        gains[symbol.ID - 3] += 1;
                     }
                 }
                 else
                 {
-                    Gains.Add(symbol.ID, 1);
+                    gains.Add(symbol.ID, 1);
                 }
             }
             else
             {
-                Gains[symbol.ID]++;
+                gains[symbol.ID]++;
             }
         }
         int[] Bingos = new int[] { 1, 1, 1 };
@@ -162,13 +162,13 @@ public class MachineModel
 
         for (int i = 0; i < 3; i++)
         {
-            if (Gains.ContainsKey(i))
+            if (gains.ContainsKey(i))
             {
-                Gains[i] *= Bingos[i];
+                gains[i] *= Bingos[i];
             }
             
         }
-        Debug.Log(string.Join(",", Gains));
+        Debug.Log(string.Join(",", gains));
         //Debug.Log(string.Join(",", Bingos));
         //Send gain values
     }

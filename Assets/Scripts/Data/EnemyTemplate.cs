@@ -18,6 +18,8 @@ namespace OnCloud7
 
         private List<EnemySkillTemplate> skillSequence;
         
+        public List<EnemySkillTemplate> SkillSequence => skillSequence;
+        
         public void Initialize()
         {
             throw new NotImplementedException();

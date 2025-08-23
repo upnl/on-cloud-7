@@ -59,9 +59,9 @@ namespace OnCloud7
         }
 
         public void StartSpin()
-            {
-                GameManager.Instance.StartSpin(_machineModel.ID);
-            }
+        {
+            GameManager.Instance.StartSpin(_machineModel.ID);
+        }
 
         public void CleanPool()
         {
