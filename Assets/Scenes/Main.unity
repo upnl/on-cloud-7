@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 11692581}
   - component: {fileID: 11692583}
   - component: {fileID: 11692582}
+  - component: {fileID: 11692585}
+  - component: {fileID: 11692584}
   m_Layer: 5
   m_Name: Machine2
   m_TagString: Untagged
@@ -194,6 +196,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11692580}
   m_CullTransparentMesh: 1
+--- !u!114 &11692584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11692580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108f50a7927cde24d816e822b0182139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  symbolPrefab: {fileID: 4716045518900101998, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+--- !u!114 &11692585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11692580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 20
+    m_Right: 20
+    m_Top: 20
+    m_Bottom: 20
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 85, y: 85}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &28663029
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +809,8 @@ GameObject:
   - component: {fileID: 546463830}
   - component: {fileID: 546463832}
   - component: {fileID: 546463831}
+  - component: {fileID: 546463834}
+  - component: {fileID: 546463833}
   m_Layer: 5
   m_Name: Machine1
   m_TagString: Untagged
@@ -834,6 +875,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546463829}
   m_CullTransparentMesh: 1
+--- !u!114 &546463833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546463829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108f50a7927cde24d816e822b0182139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  symbolPrefab: {fileID: 4716045518900101998, guid: 2c166651c74cd5948893ccc49e0e9782, type: 3}
+--- !u!114 &546463834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546463829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 20
+    m_Right: 20
+    m_Top: 20
+    m_Bottom: 20
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 85, y: 85}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1383,7 +1461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &862117162
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2072,7 +2150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1303296325
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3437,6 +3515,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
+      propertyPath: _machineViews.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
+      propertyPath: '_machineViews.Array.data[0]'
+      value: 
+      objectReference: {fileID: 546463833}
+    - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
+      propertyPath: '_machineViews.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11692584}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

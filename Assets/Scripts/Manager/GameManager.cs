@@ -17,7 +17,11 @@ public class GameManager : MonoBehaviour
     private List<SymbolTemplate> _symbolTemplates;
     
     public List<SymbolTemplate> SymbolTemplates => _symbolTemplates;
-    
+
+    private List<MachineModel> _machines = new List<MachineModel>();
+    [SerializeField]
+    private List<MachineView> _machineViews;
+
     void Awake()
     {
         if (Instance != null)
@@ -31,6 +35,19 @@ public class GameManager : MonoBehaviour
         _enemyTemplates = EnemyTemplateData.ToEnemyTemplates(_enemySkillTemplates);
         _roundUpgradeTemplates = RoundUpgradeTemplateData.ToRoundUpgradeTemplates();
         _symbolTemplates = SymbolTemplateData.ToSymbolTemplates();
+
+        _machines.Clear();
+        for (int i = 0; i < 2; i++)
+        {
+            MachineModel machine = new MachineModel();
+            machine.Initialize();
+            _machines.Add(machine);
+            _machineViews[i].Initialize(machine);
+        }
+        
+        
+        
+        
     }
 
     // Update is called once per frame
