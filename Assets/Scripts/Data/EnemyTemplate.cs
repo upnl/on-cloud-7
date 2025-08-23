@@ -20,7 +20,7 @@ namespace OnCloud7
         
         public void Initialize()
         {
-            Debug.Log(this.ToString());
+            throw new NotImplementedException();
         }
 
         public void Initialize(List<EnemySkillTemplate> skillTemplates)
@@ -28,12 +28,12 @@ namespace OnCloud7
             skills = new List<EnemySkillTemplate>();
             foreach (var skillTemplate in skillTemplates)
             {
-                if (skillTemplate.ID == SkillID1 && SkillID1 != 0)
+                if (skillTemplate.ID == SkillID1 && SkillID1 >= 0)
                 {
                     skills.Add(skillTemplate);
                 }
 
-                if (skillTemplate.ID == SkillID2 && SkillID2 != 0)
+                if (skillTemplate.ID == SkillID2 && SkillID2 >= 0)
                 {
                     skills.Add(skillTemplate);
                 }
@@ -55,13 +55,13 @@ namespace OnCloud7
                 sb.Append("Health: ");
                 sb.AppendLine(Health);
                 int skillIndex = 0;
-                if (SkillID1 != 0 && skillIndex < skills.Count)
+                if (SkillID1 >= 0 && skillIndex < skills.Count)
                 {
                     sb.Append("Skill1: ");
                     sb.AppendLine(skills[skillIndex].Name);
                     skillIndex++;
                 }
-                if (SkillID2 != 0 && skillIndex < skills.Count)
+                if (SkillID2 >= 0 && skillIndex < skills.Count)
                 {
                     sb.Append("Skill2: ");
                     sb.AppendLine(skills[skillIndex].Name);

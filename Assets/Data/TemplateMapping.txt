@@ -13,7 +13,7 @@ Type
 Level
 0: Basic(Level 1), 1: Level 2, 2: Level 3(Final)
 
-EnemyTemplate: ID, Name, IsBoss, Health, Attack, SkillID1, SkillID2, ... 
+EnemyTemplate: ID, Name, IsBoss, Health, SkillID1, SkillID2, ... 
 IsBoss
 0: False(Normal), 1: True(Boss)
 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      LevelUpPanel_0: -396611617727015982
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

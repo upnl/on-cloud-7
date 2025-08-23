@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca677248534ff04da29ee75a08a9a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemySkillTemplateData: {fileID: 4900000, guid: 387d70fd8ea2e424e8bd603f33107a13, type: 3}
+  EnemyTemplateData: {fileID: 4900000, guid: 7d16592f51ac7fe4b8e2e479b31c8bda, type: 3}
+  RewardTemplateData: {fileID: 4900000, guid: 69940e5a8422c8d47bd7a25bb51bcae2, type: 3}
+  RoundUpgradeTemplateData: {fileID: 4900000, guid: dd7effa5c565a22428b17a3cdcc5485b, type: 3}
+  SymbolTemplateData: {fileID: 4900000, guid: e3e30c0d56e763846ad238a39790b763, type: 3}
