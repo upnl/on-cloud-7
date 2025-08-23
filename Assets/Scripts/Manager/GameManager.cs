@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using OnCloud7;
 using UnityEngine;
+using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -89,5 +90,70 @@ public class GameManager : MonoBehaviour
             _machineViews[i].Initialize(_machines[i]);
         }
 
+    }
+
+    public void ChangeRequest(SymbolModel ChangeSymbol, int machineID)
+    {
+        List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
+        int beforeSymbolID = ChangeSymbol.Arg1;
+        int afterSymbolID = Util.SymbolID(ChangeSymbol.Arg3);
+        if (beforeSymbolID >= 0 && beforeSymbolID <= 2)
+        {
+            for (int i = 0; i < symbolPool.Count; i++) 
+            { 
+                if (symbolPool[i].ID == beforeSymbolID) 
+                {
+                    _machines[machineID].ChangeSymbol(beforeSymbolID, afterSymbolID);
+                }
+            }
+        }
+        else if (beforeSymbolID == 777)
+        {
+            List<int> changeIndexPool = new List<int>();
+            foreach (SymbolModel cand in symbolPool)
+            {
+                if (cand.ID >= 0 && cand.ID <= 2)
+                {
+                    changeIndexPool.Add(cand.ID);
+                }
+            }
+
+            if (changeIndexPool.Count > 0)
+            {
+                Random r = new Random(System.DateTime.Now.Millisecond);
+                int changeIndex = r.Next(changeIndexPool.Count);
+                _machines[machineID].ChangeSymbol(changeIndex, afterSymbolID);
+            }
+
+        }
+        else if (beforeSymbolID == 7777)
+        {
+            List<int> changeIndexPool = new List<int>(); 
+            foreach (SymbolModel cand in symbolPool)
+            {
+                if (cand.ID >= 6)
+                {
+                    changeIndexPool.Add(cand.ID);
+                }
+            }
+
+            if (changeIndexPool.Count > 0)
+            {
+                Random r = new Random(System.DateTime.Now.Millisecond);
+                int changeIndex = r.Next(changeIndexPool.Count);
+                _machines[machineID].ChangeSymbol(changeIndex, afterSymbolID);
+            }
+        }
+    }
+
+
+    public void AddRequest(SymbolModel AddSymbol, int machineID)
+    {
+        _machines[machineID].AddSymbol(addIndex);
+    }
+
+    public void RemoveRequest(SymbolModel RemoveSymbol, int machineID)
+    {
+        _machines[machineID].RemoveSymbol(removeIndex);
     }
 }

@@ -13,6 +13,7 @@ namespace OnCloud7
         public SymbolView symbolPrefab;
         public ChangeSymbolView changeSymbolPrefab;
         public AddSymbolView addSymbolPrefab;
+        public RemoveSymbolView removeSymbolPrefab;
         [SerializeField] private Button _chooseButton;
 
         public void Initialize(MachineModel machineModel)
@@ -45,6 +46,12 @@ namespace OnCloud7
                     asv.Initialize(curSymbol);
                     _symbols.Add(asv);
                     
+                }
+                else if (curSymbol.Type == SymbolTemplate.SymbolType.Remove)
+                {
+                    RemoveSymbolView rsv = Instantiate(removeSymbolPrefab, transform);
+                    rsv.Initialize(curSymbol);
+                    _symbols.Add(rsv);
                 }
                 
 

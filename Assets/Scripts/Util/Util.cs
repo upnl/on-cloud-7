@@ -3,7 +3,7 @@ using Random = System.Random;
 
 public static class Util
 {
-    static int SymbolID(int symbolID)
+    public static int SymbolID(int symbolID)
     {
         if (symbolID == 777)
         {

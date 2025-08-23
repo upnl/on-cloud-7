@@ -48,12 +48,32 @@ public class MachineModel
         {
             _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[50 + i]));
         }
-        
+        //temp remove symbols
+        for (int i = 0; i < 7; i++)
+        {
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[70 + i]));
+        }        
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
         
+
+        
     }
-    
+
+    public void ChangeSymbol(int beforeIndex, int afterIndex)
+    {
+        _symbolPool[beforeIndex] = new SymbolModel(GameManager.Instance.SymbolTemplates[afterIndex]);
+    }
+
+    public void AddSymbol(int addIndex)
+    {
+        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[addIndex]));
+    }
+
+    public void RemoveSymbol(int removeIndex)
+    {
+        _symbolPool.RemoveAt(removeIndex);
+    }
     public void Roll()
     {
         _result.Clear();
@@ -66,9 +86,10 @@ public class MachineModel
         }
         GameManager.Instance.SymbolsRender(_result);
         CheckResult(_result);
+        SpecialEffects(_result);
         _symbolPool.AddRange(_result);
         _symbolPool.Sort();
-        //Special Symbols activate
+        
     }
 
     public void CheckResult(List<SymbolModel> result)
@@ -203,6 +224,21 @@ public class MachineModel
             }
         }
         return curSymbol;
+    }
+
+    private void SpecialEffects(List<SymbolModel> result)
+    {
+        foreach (SymbolModel symbol in result)
+        {
+            if (symbol.Type == SymbolTemplate.SymbolType.Change)
+            {
+                GameManager.Instance.ChangeRequest(symbol, symbol.Arg0);
+            }
+            else if (symbol.Type == SymbolTemplate.SymbolType.Add && _symbolPool.Count < 48)
+            {
+                GameManager.Instance.AddRequest(symbol, symbol.Arg0);
+            }
+        }
     }
 
 
