@@ -9,6 +9,7 @@ namespace OnCloud7
         private List<SymbolView> _symbols = new List<SymbolView>();
         private MachineModel _machineModel;
         public SymbolView symbolPrefab;
+        public ChangeSymbolView changeSymbolPrefab;
 
         public void Initialize(MachineModel machineModel)
         {
@@ -30,9 +31,18 @@ namespace OnCloud7
             }
             foreach (SymbolModel symbol in result)
             {
-                SymbolView sv = Instantiate(symbolPrefab, transform);
-                sv.Initialize(symbol);
-                _symbols.Add(sv);
+                if (symbol.Type == SymbolTemplate.SymbolType.Normal || symbol.Type == SymbolTemplate.SymbolType.Random || symbol.Type == SymbolTemplate.SymbolType.Rainbow)
+                {
+                    SymbolView sv = Instantiate(symbolPrefab, transform);
+                    sv.Initialize(symbol);
+                    _symbols.Add(sv);
+                }
+                else if (symbol.Type == SymbolTemplate.SymbolType.Change)
+                {
+                    ChangeSymbolView sv = Instantiate(changeSymbolPrefab, transform);
+                    sv.Initialize(symbol);
+                    _symbols.Add(sv);
+                }
             }
         }
 

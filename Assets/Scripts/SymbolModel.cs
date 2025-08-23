@@ -14,6 +14,12 @@ namespace OnCloud7
         private string _description;
         
         public int ID => _id;
+        public SymbolTemplate.SymbolType Type => _type;
+        public int Arg0 => _arg0;
+        public int Arg1 => _arg1;
+        public int Arg2 => _arg2;
+        public int Arg3 => _arg3;
+        
 
         public SymbolModel(int id, SymbolTemplate.SymbolType type, bool isImmutable, int arg0, int arg1, int arg2, int arg3, string name, string description)
         {

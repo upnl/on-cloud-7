@@ -37,6 +37,12 @@ public class MachineModel
             }
         }
         
+        //temp change symbols
+        for (int i = 0; i < 15; i++)
+        {
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 8]));
+        }
+        
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
     }
@@ -55,6 +61,7 @@ public class MachineModel
         CheckResult(_result);
         _symbolPool.AddRange(_result);
         _symbolPool.Sort();
+        //Special Symbols activate
     }
 
     public void CheckResult(List<SymbolModel> result)
