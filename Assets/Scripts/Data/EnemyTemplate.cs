@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Text;
 using UnityEngine;
 
 
@@ -12,7 +13,6 @@ namespace OnCloud7
         [ReadOnly] public string Name;
         [ReadOnly] public bool IsBoss;
         [ReadOnly] public int Health;
-        [ReadOnly] public int Attack;
         [ReadOnly] public int SkillID1;
         [ReadOnly] public int SkillID2;
 
@@ -20,7 +20,7 @@ namespace OnCloud7
         
         public void Initialize()
         {
-            
+            Debug.Log(this.ToString());
         }
 
         public void Initialize(List<EnemySkillTemplate> skillTemplates)
@@ -37,6 +37,38 @@ namespace OnCloud7
                 {
                     skills.Add(skillTemplate);
                 }
+            }
+            Debug.Log(this.ToString());
+        }
+
+        public override string ToString()
+        {
+            using (Utf16ValueStringBuilder sb = ZString.CreateStringBuilder(true))
+            {
+                sb.AppendLine("[EnemyTemplate] ");
+                sb.Append("ID: ");
+                sb.AppendLine(ID);
+                sb.Append("Name: ");
+                sb.AppendLine(Name);
+                sb.Append("IsBoss: ");
+                sb.AppendLine(IsBoss);
+                sb.Append("Health: ");
+                sb.AppendLine(Health);
+                int skillIndex = 0;
+                if (SkillID1 != 0 && skillIndex < skills.Count)
+                {
+                    sb.Append("Skill1: ");
+                    sb.AppendLine(skills[skillIndex].Name);
+                    skillIndex++;
+                }
+                if (SkillID2 != 0 && skillIndex < skills.Count)
+                {
+                    sb.Append("Skill2: ");
+                    sb.AppendLine(skills[skillIndex].Name);
+                    skillIndex++;
+                }
+
+                return sb.ToString();
             }
         }
     }

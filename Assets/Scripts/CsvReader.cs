@@ -12,11 +12,12 @@ namespace OnCloud7
         /// <summary>
         /// SymbolTemplate.csv 파일 텍스트로부터 정보를 읽어와 SymbolTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
-        /// <param name="csvText">CSV 파일의 전체 텍스트 내용</param>
+        /// <param name="csvTextAsset">CSV 파일의 전체 텍스트 내용</param>
         /// <param name="delimiter">CSV 열을 구분하는 글자</param>
         /// <returns></returns>
-        public static List<SymbolTemplate> ToSymbolTemplates(this string csvText, char delimiter = '\t')
+        public static List<SymbolTemplate> ToSymbolTemplates(this TextAsset csvTextAsset, char delimiter = '\t')
         {
+            string csvText = csvTextAsset.text;
             bool isFirstLine = true;
             Dictionary<int, FieldInfo> fields = new Dictionary<int, FieldInfo>();
             Dictionary<int, Func<string, object>> typeConverter = new();
@@ -170,11 +171,12 @@ namespace OnCloud7
         /// <summary>
         /// EnemySkillTemplate.csv 파일 텍스트로부터 정보를 읽어와 EnemySkillTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
-        /// <param name="csvText">CSV 파일의 전체 텍스트 내용</param>
+        /// <param name="csvTextAsset">CSV 파일의 전체 텍스트 내용</param>
         /// <param name="delimiter">CSV 열을 구분하는 글자</param>
         /// <returns></returns>
-        public static List<EnemySkillTemplate> ToEnemySkillTemplates(this string csvText, char delimiter = '\t')
+        public static List<EnemySkillTemplate> ToEnemySkillTemplates(this TextAsset csvTextAsset, char delimiter = '\t')
         {
+            string csvText = csvTextAsset.text;
             bool isFirstLine = true;
             Dictionary<int, FieldInfo> fields = new Dictionary<int, FieldInfo>();
             Dictionary<int, Func<string, object>> typeConverter = new();
@@ -266,11 +268,12 @@ namespace OnCloud7
         /// <summary>
         /// EnemyTemplate.csv 파일 텍스트로부터 정보를 읽어와 EnemyTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
-        /// <param name="csvText">CSV 파일의 전체 텍스트 내용</param>
+        /// <param name="csvTextAsset">CSV 파일</param>
         /// <param name="delimiter">CSV 열을 구분하는 글자</param>
         /// <returns></returns>
-        public static List<EnemyTemplate> ToEnemyTemplates(this string csvText, List<EnemySkillTemplate> skillTemplates, char delimiter = '\t')
+        public static List<EnemyTemplate> ToEnemyTemplates(this TextAsset csvTextAsset, List<EnemySkillTemplate> skillTemplates, char delimiter = '\t')
         {
+            string csvText = csvTextAsset.text;
             bool isFirstLine = true;
             Dictionary<int, FieldInfo> fields = new Dictionary<int, FieldInfo>();
             Dictionary<int, Func<string, object>> typeConverter = new();
@@ -370,11 +373,12 @@ namespace OnCloud7
         /// <summary>
         /// RewardTemplate.csv 파일 텍스트로부터 정보를 읽어와 RewardTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
-        /// <param name="csvText">CSV 파일의 전체 텍스트 내용</param>
+        /// <param name="csvTextAsset">CSV 파일의 전체 텍스트 내용</param>
         /// <param name="delimiter">CSV 열을 구분하는 글자</param>
         /// <returns></returns>
-        public static List<RewardTemplate> RewardTemplates(this string csvText, char delimiter = '\t')
+        public static List<RewardTemplate> ToRewardTemplates(this TextAsset csvTextAsset, char delimiter = '\t')
         {
+            string csvText = csvTextAsset.text;
             bool isFirstLine = true;
             Dictionary<int, FieldInfo> fields = new Dictionary<int, FieldInfo>();
             Dictionary<int, Func<string, object>> typeConverter = new();
@@ -477,11 +481,12 @@ namespace OnCloud7
         /// <summary>
         /// RoundUpgradeTemplate.csv 파일 텍스트로부터 정보를 읽어와 RoundUpgradeTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
-        /// <param name="csvText">CSV 파일의 전체 텍스트 내용</param>
+        /// <param name="csvTextAsset">CSV 파일의 전체 텍스트 내용</param>
         /// <param name="delimiter">CSV 열을 구분하는 글자</param>
         /// <returns></returns>
-        public static List<RoundUpgradeTemplate> ToRoundUpgradeTemplates(this string csvText, char delimiter = '\t')
+        public static List<RoundUpgradeTemplate> ToRoundUpgradeTemplates(this TextAsset csvTextAsset, char delimiter = '\t')
         {
+            string csvText = csvTextAsset.text;
             bool isFirstLine = true;
             Dictionary<int, FieldInfo> fields = new Dictionary<int, FieldInfo>();
             Dictionary<int, Func<string, object>> typeConverter = new();
