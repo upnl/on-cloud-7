@@ -1,7 +1,7 @@
-ID	Type	Description
-0	Enchant	@번 슬롯머신에 들어있는 @ 심볼 하나의 등급을 1단계 강화
-1	Special	@번 슬롯머신에 @ 심볼 추가
-2	Change	@번 슬롯머신에 들어있는 @ 심볼 하나를 같은 등급의 @ 심볼로 변경
-3	Add	@번 슬롯머신에 @ 심볼 추가
-4	StaticRemove	@번 슬롯머신에서 @ 심볼 제거
-5	RandomRemove	@번 슬롯머신에서 @ 심볼 제거
+ID	Type	Name	Description
+0	Enchant	강화	@번 슬롯머신에 들어있는 @ 심볼 하나의 등급을 1단계 강화
+1	Special	"변수 창출"	@번 슬롯머신에 @ 심볼 추가
+2	Change	교체	@번 슬롯머신에 들어있는 @ 심볼 하나를 같은 등급의 @ 심볼로 변경
+3	Add	추가	@번 슬롯머신에 @ 심볼 추가
+4	StaticRemove	제거	@번 슬롯머신에서 @ 심볼 제거
+5	RandomRemove	제거	@번 슬롯머신에서 무작위 심볼 제거

@@ -1,2 +1,3 @@
-ID	Name	IsBoss	Health	Attack	SkillD1	SkillD2
-0						
+ID	Name	IsBoss	Health	SkillID1	SkillID2
+0	Fly	false	50	0	
+1	Bird	false	70	0	1

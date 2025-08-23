@@ -1,2 +1,3 @@
 ID	Cooltime	MinDamage	MaxDamage	Name	Description
-0					
+1	0	3	5	몸통박치기	적을 즉시 공격합니다.
+2	1	5	12	냉각 빔	한 턴 후에, 강력한 공격을 가합니다.
