@@ -1,0 +1,24 @@
+RewardTemplate: ID, Type, Description
+별도 매핑 없음
+
+RoundUpgradeTemplate: ID, Type, Level, Description
+Level
+0: Common, 1: Rare, 2: Epic, 3: Legendary
+
+SymbolTemplate: ID, IsNormal, Type, Level, Name, Description
+IsNormal
+0: False(Special), 1: True(Normal)
+Type
+0: Snow(Attack), 1: Cloud(Avoid), 2: Wind(MP)
+Level
+0: Basic(Level 1), 1: Level 2, 2: Level 3(Final)
+
+EnemyTemplate: ID, Name, IsBoss, Health, Attack, SkillID1, SkillID2, ... 
+IsBoss
+0: False(Normal), 1: True(Boss)
+
+EnemySkillTemplate: ID, Cooltime, MinDamage, MaxDamage, Name, Description
+MinDamage, MaxDamage
+->Damage = 수치 * 시전자의 Attack
+
+
