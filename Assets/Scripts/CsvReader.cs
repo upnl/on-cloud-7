@@ -9,6 +9,8 @@ namespace OnCloud7
 {
     public static class CsvReader
     {
+        private static readonly List<int> NullArg =  new() { -1 };
+        
         /// <summary>
         /// SymbolTemplate.csv 파일 텍스트로부터 정보를 읽어와 SymbolTemplate 인스턴스 목록으로 변환합니다.
         /// </summary>
@@ -48,10 +50,6 @@ namespace OnCloud7
                         switch (token)
                         {
                             case "ID":
-                            case "Arg0":
-                            case "Arg1":
-                            case "Arg2":
-                            case "Arg3":
                                 typeConverter.Add(i, str =>
                                 {
                                     if (string.IsNullOrEmpty(str)) return -1;
@@ -77,6 +75,23 @@ namespace OnCloud7
                                     {
                                         return SymbolTemplate.SymbolType.Normal;
                                     }
+                                });
+                                break;
+                            case "Arg0":
+                            case "Arg1":
+                            case "Arg2":
+                            case "Arg3":
+                                typeConverter.Add(i, str =>
+                                {
+                                    if (string.IsNullOrEmpty(str)) return NullArg;
+                                    List<int> values = new List<int>();
+                                    
+                                    string[] intTokens = str.TrimStart('[').TrimEnd(']').Split(',');
+                                    foreach (string intToken in intTokens)
+                                    {
+                                        values.Add(int.Parse(intToken));
+                                    }
+                                    return values;
                                 });
                                 break;
                             default:
@@ -117,11 +132,37 @@ namespace OnCloud7
                     }
                 }
 
-                symbolTemplate.Initialize();
                 symbolTemplates.Add(symbolTemplate);
             }
 
-            return symbolTemplates;
+            List<SymbolTemplate> duplicatedTemplates = new List<SymbolTemplate>();
+            foreach (var original in symbolTemplates)
+            {
+                for (int i0 = 0; i0 < original.Arg0.Count; i0++)
+                {
+                    for (int i1 = 0; i1 < original.Arg1.Count; i1++)
+                    {
+                        for (int i2 = 0; i2 < original.Arg2.Count; i2++)
+                        {
+                            for (int i3 = 0; i3 < original.Arg3.Count; i3++)
+                            {
+                                if (original.Type == SymbolTemplate.SymbolType.Change &&
+                                    original.Arg1[i1] == original.Arg3[i3])
+                                {
+                                    // 같은 문양으로 바꾸는 효과는 의미 없음.
+                                    continue;
+                                }
+                                var duplicated = new SymbolTemplate();
+                                duplicated.CloneWithArgValues(original, i0, i1, i2, i3);
+                                duplicated.Initialize();
+                                duplicatedTemplates.Add(duplicated);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return duplicatedTemplates;
         }
         
         /// <summary>
@@ -393,6 +434,24 @@ namespace OnCloud7
                                     }
                                 });
                                 break;
+                            case "Arg0":
+                            case "Arg1":
+                            case "Arg2":
+                            case "Arg3":
+                            case "Arg4":
+                                typeConverter.Add(i, str =>
+                                {
+                                    if (string.IsNullOrEmpty(str)) return NullArg;
+                                    List<int> values = new List<int>();
+                                    
+                                    string[] intTokens = str.TrimStart('[').TrimEnd(']').Split(',');
+                                    foreach (string intToken in intTokens)
+                                    {
+                                        values.Add(int.Parse(intToken));
+                                    }
+                                    return values;
+                                });
+                                break;
                             default:
                                 Debug.LogError(ZString.Concat("CSV Error: 알 수 없는 ", i, "번째 타입 ", tokens[i]));
                                 typeConverter.Add(i, str => str);
@@ -431,11 +490,41 @@ namespace OnCloud7
                     }
                 }
 
-                roundUpgradeTemplate.Initialize();
                 roundUpgradeTemplates.Add(roundUpgradeTemplate);
             }
+            
+            List<RoundUpgradeTemplate> duplicatedTemplates = new List<RoundUpgradeTemplate>();
+            foreach (var original in roundUpgradeTemplates)
+            {
+                for (int i0 = 0; i0 < original.Arg0.Count; i0++)
+                {
+                    for (int i1 = 0; i1 < original.Arg1.Count; i1++)
+                    {
+                        for (int i2 = 0; i2 < original.Arg2.Count; i2++)
+                        {
+                            for (int i3 = 0; i3 < original.Arg3.Count; i3++)
+                            {
+                                if (original.Type == RoundUpgradeTemplate.UpgradeType.Change &&
+                                    original.Arg1[i1] == original.Arg3[i3])
+                                {
+                                    // 같은 문양으로 바꾸는 효과는 의미 없음.
+                                    continue;
+                                }
 
-            return roundUpgradeTemplates;
+                                for (int i4 = 0; i4 < original.Arg4.Count; i4++)
+                                {
+                                    var duplicated = new RoundUpgradeTemplate();
+                                    duplicated.CloneWithArgValues(original, i0, i1, i2, i3, i4);
+                                    duplicated.Initialize();
+                                    duplicatedTemplates.Add(duplicated);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return duplicatedTemplates;
         }
     }
 }

@@ -33,10 +33,10 @@ namespace OnCloud7
             _id = symbolTemplate.ID;
             _type = symbolTemplate.Type;
             _isImmutable = symbolTemplate.IsImmutable;
-            _arg0 = symbolTemplate.Arg0;
-            _arg1 = symbolTemplate.Arg1;
-            _arg2 = symbolTemplate.Arg2;
-            _arg3 = symbolTemplate.Arg3;
+            _arg0 = symbolTemplate.ArgValue0;
+            _arg1 = symbolTemplate.ArgValue1;
+            _arg2 = symbolTemplate.ArgValue2;
+            _arg3 = symbolTemplate.ArgValue3;
             _name = symbolTemplate.Name;
             _description = symbolTemplate.Description;
         }
