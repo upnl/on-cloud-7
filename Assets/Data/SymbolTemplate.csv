@@ -1,4 +1,4 @@
 ID	IsNormal	Level	Name	Description
-0	true	0	눈	눈(공격 심볼)의 기본형
+0	true	0	눈	눈(마력 심볼)의 기본형
 1	true	0	클라우드	클라우드(회피 심볼)의 기본형
-2	true	0	상승기류	상승기류(마력 심볼)의 기본형
+2	true	0	상승기류	상승기류(공격 심볼)의 기본형
