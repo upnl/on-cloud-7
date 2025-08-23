@@ -1,16 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SymbolView : MonoBehaviour
+namespace OnCloud7
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public class SymbolView : MonoBehaviour
     {
-        
+        [SerializeField] private Image _symbolIcon;
+        private SymbolModel _symbolModel;
+        [SerializeField] private List<Sprite> _symbolSprites;
+
+        public void Initialize(SymbolModel symbolModel)
+        {
+            _symbolModel = symbolModel;
+            _symbolIcon.sprite = _symbolSprites[symbolModel.ID];
+        }
+
     }
 }
+
+
