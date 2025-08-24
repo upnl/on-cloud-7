@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             MachineModel machine = new MachineModel();
-            machine.Initialize();
+            machine.Initialize(i);
             _machines.Add(machine);
             _machineViews[i].Initialize(machine);
         }

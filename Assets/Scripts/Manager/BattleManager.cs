@@ -115,6 +115,7 @@ namespace OnCloud7
             _upgradePoint = 0;
             _enemySkillIndex = 0;
             _statusText.SetText("전투를 시작합니다!");
+            GameManager.Instance.BackToChoice();
         }
 
         public async UniTask ProcessRollResult(Dictionary<int, int> gains)
@@ -137,7 +138,7 @@ namespace OnCloud7
                         break;
                     case 1:
                         // 클라우드: 회피
-                        _hitRate *= (1f - power / 10f);
+                        _hitRate = Mathf.Pow(0.9f, power);
                         break;
                     case 2:
                         // 상승 기류: 공격
@@ -261,6 +262,7 @@ namespace OnCloud7
         {
             // TODO
             Debug.Log("Death");
+            _statusText.SetText("으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜시기 바랍니다.)");
         }
 
         private bool CheckRoundEnd()

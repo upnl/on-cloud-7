@@ -24,8 +24,9 @@ public class MachineModel
 
     
 
-    public void Initialize()
+    public void Initialize(int id)
     {
+        _id = id;
         _symbolPool = new List<SymbolModel>();
         for (int i = 0; i < 3; i++)
         {
@@ -39,23 +40,28 @@ public class MachineModel
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 3]));
             }
         }
-        
-        //temp change symbols
-        for (int i = 0; i < 3; i++)
+
+        if (_id == 1)
         {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 10]));
+            //temp change symbols
+            for (int i = 0; i < 3; i++)
+            {
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 10]));
+            }
+
+            //temp add symbols
+            for (int i = 0; i < 3; i++)
+            {
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[58 + i]));
+            }
+
+            //temp remove symbols
+            for (int i = 0; i < 3; i++)
+            {
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[78 + i]));
+            }
         }
-        
-        //temp add symbols
-        for (int i = 0; i < 3; i++)
-        {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[58 + i]));
-        }
-        //temp remove symbols
-        for (int i = 0; i < 3; i++)
-        {
-            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[78 + i]));
-        }        
+
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _result = new List<SymbolModel>();
         
