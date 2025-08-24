@@ -100,6 +100,11 @@ namespace OnCloud7
 
         public async UniTask LoadNextRound()
         {
+            if (_round > 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(1));
+            }
+
             _enemyTemplate = GameManager.Instance.EnemyTemplates[_round];
             if (_round > 0)
             {
@@ -153,7 +158,7 @@ namespace OnCloud7
                         break;
                 }
             }
-            _statusText.SetTextFormat("회피율: {0}%\n물리 공격: {1}\n깨달음 공격: {2}", (1f - _hitRate) * 100f, damage, upgradeGain);
+            _statusText.SetTextFormat("구름 회피율: {0:0.00}%\n상승 기류 공격: {1}\n눈 공격: {2}", (1f - _hitRate) * 100f, damage, upgradeGain);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
@@ -254,20 +259,20 @@ namespace OnCloud7
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
                 EnemyCurrentHealth += damage;
-                _statusText.SetTextFormat("{0}\n적이 {1}의 피해를 스스로 입었다!", _statusText.text, -damage);
+                _statusText.SetTextFormat("{0}\n적이 {1}의 HP를 스스로 잃었다!", _statusText.text, -damage);
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f));
             }
             else if (random.NextDouble() <= hitRate)
             {
                 PlayerHealth -= damage;
-                Debug.Log(ZString.Format("아야! {0}의 피해를 입었다!", damage));
-                _statusText.SetTextFormat("{0}\n아야! {1}의 피해를 입었다!", _statusText.text, damage);
+                Debug.Log(ZString.Format("아야! {0}의 HP를 잃었다!", damage));
+                _statusText.SetTextFormat("{0}\n아야! {1}의 HP를 잃었다!", _statusText.text, damage);
             }
             else
             {
-                Debug.Log(ZString.Format("{0}%의 확률로 피했다!", (1f - hitRate) * 100f));
-                _statusText.SetTextFormat("{0}\n{1}%의 확률로 피했다!", _statusText.text, (1f - hitRate) * 100f);
+                Debug.Log(ZString.Format("{0:0.00}%의 확률로 피했다!", (1f - hitRate) * 100f));
+                _statusText.SetTextFormat("{0}\n{1:0.00}%의 확률로 {2}의 적 공격을 피했다!", _statusText.text, (1f - hitRate) * 100f, damage);
             }
 
             _enemySkillIndex++;
@@ -281,7 +286,7 @@ namespace OnCloud7
         {
             // TODO
             Debug.Log("Death");
-            _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜시기 바랍니다.)", _statusText.text);
+            _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜세요.)", _statusText.text);
         }
 
         private bool CheckRoundEnd()
