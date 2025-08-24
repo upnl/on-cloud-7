@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _machineChoice;
     [SerializeField] private GameObject _machineLaunch;
+    [SerializeField] private GameObject _gameOver;
     private int curMachineIndex;
 
     [SerializeField] private Button _backButton;
@@ -111,6 +112,14 @@ public class GameManager : MonoBehaviour
             _machineViews[i].Initialize(_machines[i]);
         }
 
+    }
+
+    public void GameOver()
+    {
+        _machineChoice.SetActive(false);
+        _machineLaunch.SetActive(false);
+        _gameOver.SetActive(true);
+        
     }
 
     public void ChangeRequest(SymbolModel targetSymbol, int machineID)
