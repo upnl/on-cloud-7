@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
+using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,11 @@ namespace OnCloud7
     {
         private bool _gameStarted = false;
         public bool GameStarted => _gameStarted;
+        
+        public enum BattleState { SelectMachine, RollAndAttack, SelectUpgrade }
+        
+        private BattleState _state;
+        
         /// <summary>
         /// 몇 라운드인가? (1 ~ 7)
         /// </summary>
@@ -20,9 +27,9 @@ namespace OnCloud7
         private int _playerHealth;
 
         /// <summary>
-        /// 플레이어 회피율 (최대 1f)
+        /// 플레이어 명중률 (1f - 회피율)
         /// </summary>
-        private float _avoidability;
+        private float _hitRate;
 
         /// <summary>
         /// 깨달음(증강체) 경지
@@ -66,17 +73,54 @@ namespace OnCloud7
             LoadNextRound();
         }
 
-        public void LoadNextRound()
+        public async UniTask LoadNextRound()
         {
             _enemyTemplate = GameManager.Instance.EnemyTemplates[_round];
             if (_round > 0)
             {
-                GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
+                await GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
             }
             _round++;
             _enemyCurrentHealth = _enemyTemplate.Health;
             _upgradePoint = 0;
             _enemySkillIndex = 0;
+        }
+
+        public async UniTask ProcessRollResult(Dictionary<int, int> gains)
+        {
+            // 기본 문양만 여기서 처리합니다.
+            // 특수 문양은 MachineModel.SpecialEffects() 참고.
+            _hitRate = 1f;
+            
+            foreach (var (symbolID, power) in gains)
+            {
+                SymbolTemplate symbol = GameManager.Instance.SymbolTemplates[symbolID];
+                switch (symbolID)
+                {
+                    case 0:
+                        // 눈: 깨달음의 경지 상승
+                        _upgradePoint += power;
+                        break;
+                    case 1:
+                        // 클라우드: 회피
+                        _hitRate *= (1f - power / 100f);
+                        break;
+                    case 2:
+                        // 상승 기류: 공격
+                        _enemyCurrentHealth -= power;
+                        break;
+                }
+            }
+
+            if (CheckRoundEnd()) return;
+            
+            // 적 공격 차례
+            await ProcessEnemyAttack();
+
+            if (CheckRoundEnd()) return;
+            
+            // 다시 Roll하러 이동
+            GameManager.Instance.BackToChoice();
         }
 
         private int UpgradeLevel(int upgradePoint)
@@ -93,7 +137,7 @@ namespace OnCloud7
                     return 3;
             }
         }
-
+/*
         public void StateUpdate()
         {
             PlayerHPText.text = _playerHealth.ToString();
@@ -139,6 +183,53 @@ namespace OnCloud7
 
 
         }
+        */
+        private async UniTask ProcessEnemyAttack()
+        {
+            if (_enemyTemplate == null) return;
+            if (_enemySkillIndex >= _enemyTemplate.SkillSequence.Count)
+            {
+                _enemySkillIndex = 0;
+            }
+            System.Random random = new System.Random();
+            int damage = random.Next(_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage, _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage + 1);
 
+            // 공격 연출 재생하기
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            
+            if (damage < 0)
+            {
+                // 음수 피해량은 적이 자기 자신에게 입히는 피해
+                _enemyCurrentHealth -= damage;
+            }
+            else
+            {
+                _playerHealth -= damage;
+            }
+        }
+
+        private async UniTask ProcessDeath()
+        {
+            // TODO
+            Debug.Log("Death");
+        }
+
+        private bool CheckRoundEnd()
+        {
+            if (_enemyCurrentHealth <= 0)
+            {
+                // 적 처치
+                LoadNextRound().Forget();
+                return true;
+            }
+            else if (_playerHealth <= 0)
+            {
+                // 플레이어 사망
+                ProcessDeath().Forget();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

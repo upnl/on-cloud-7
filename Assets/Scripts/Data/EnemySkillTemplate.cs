@@ -8,7 +8,6 @@ namespace OnCloud7
     public class EnemySkillTemplate : IDataTemplate
     {
         [ReadOnly] public int ID;
-        [ReadOnly] public int Cooltime;
         [ReadOnly] public int MinDamage;
         [ReadOnly] public int MaxDamage;
         [ReadOnly] public string Name;
@@ -28,8 +27,6 @@ namespace OnCloud7
                 sb.AppendLine(ID);
                 sb.Append("Name: ");
                 sb.AppendLine(Name);
-                sb.Append("Cooltime: ");
-                sb.AppendLine(Cooltime);
                 sb.Append("Damage: [");
                 sb.Append(MinDamage);
                 sb.Append(", ");

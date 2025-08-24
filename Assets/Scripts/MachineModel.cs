@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using OnCloud7;
 using UnityEditor;
 using UnityEngine;
@@ -86,7 +87,7 @@ public class MachineModel
             _result.Add(_symbolPool[index]);
             _symbolPool.RemoveAt(index);
         }
-        GameManager.Instance.SymbolsRender(_result);
+        GameManager.Instance.RenderSymbols(_result);
         CheckResult(_result);
         SpecialEffects(_result);
         _symbolPool.AddRange(_result);
@@ -171,7 +172,11 @@ public class MachineModel
             
         }
         Debug.Log(string.Join(",", gains));
-        BattleManager.PlayerAction(gains);
+        //BattleManager.PlayerAction(gains);
+        //Debug.Log(string.Join(",", Bingos));
+        
+        //Send gain values
+        GameManager.Instance.BattleManager.ProcessRollResult(gains).Forget();
     }
         
     
