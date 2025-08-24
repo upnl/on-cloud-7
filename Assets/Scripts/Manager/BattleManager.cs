@@ -268,6 +268,8 @@ namespace OnCloud7
                 Debug.Log(ZString.Format("{0}%의 확률로 피했다!", (1f - hitRate) * 100f));
                 _statusText.SetTextFormat("{0}\n{1}%의 확률로 피했다!", _statusText.text, (1f - hitRate) * 100f);
             }
+
+            _enemySkillIndex++;
         }
 
         private async UniTask ProcessDeath()
