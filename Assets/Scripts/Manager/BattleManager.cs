@@ -285,8 +285,6 @@ namespace OnCloud7
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
                 EnemyCurrentHealth += damage;
                 _statusText.SetTextFormat("{0}\n적이 {1}의 HP를 잃었다!", _statusText.text, -damage);
-                
-                await UniTask.Delay(TimeSpan.FromSeconds(1f));
             }
             else if (random.NextDouble() <= hitRate)
             {
