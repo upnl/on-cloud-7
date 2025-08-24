@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using TMPro;
 using System;
+using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace OnCloud7
@@ -26,6 +28,16 @@ namespace OnCloud7
         /// </summary>
         private int _playerHealth;
 
+        public int PlayerHealth
+        {
+            get => _playerHealth;
+            set
+            {
+                _playerHealth = value;
+                _playerHPText.SetTextFormat("HP: {0} / 100", _playerHealth);
+            }
+        }
+
         /// <summary>
         /// 플레이어 명중률 (1f - 회피율)
         /// </summary>
@@ -43,6 +55,16 @@ namespace OnCloud7
         /// </summary>
         private int _enemyCurrentHealth;
 
+        public int EnemyCurrentHealth
+        {
+            get => _enemyCurrentHealth;
+            set
+            {
+                _enemyCurrentHealth = value;
+                _enemyHPText.SetTextFormat("HP: {0} / {1}", _enemyCurrentHealth, _enemyTemplate?.Health);
+            }
+        }
+
         /// <summary>
         /// 적의 다음 스킬 순서
         /// </summary>
@@ -53,14 +75,14 @@ namespace OnCloud7
          * 1. BattleManager.Initialize() 호출 -> Complete
          * 2. 깨달음 선택 후 LoadNextRound() 호출하며 다음 라운드 준비 (UI도 변경)
          * 3. 현재 남은 체력 등의 정보들을 UI에 표시
-         * 4. Roll()의 결과로 나온 CheckResult()의 gains들을 BattleManager에 넘겨서 수치 변동에 반영할 수 있도록
+         * 4. Roll()의 결과로 나온 CheckResult()의 gains들을 BattleManager에 넘겨서 수치 변동에 반영할 수 있도록 -> Complete
          * 5. 라운드 끝날 때 UpgradeLevel()로 업그레이드 레벨 확인 후 RoundUpgradeTemplate에서 불러와서 증강체 3개 선택지 띄우기
-         * 6. 적이 스킬을 돌아가면서 쓰도록 하기
-         * 7. 적 특수 패턴 (예: 군대의 전역 등)
+         * 6. 적이 스킬을 돌아가면서 쓰도록 하기 -> Complete
+         * 7. 적 특수 패턴 (예: 군대의 전역 등) -> Complete
          */
 
-        [SerializeField] private TextMeshProUGUI PlayerHPText;
-        [SerializeField] private TextMeshProUGUI EnemyHPText;
+        [SerializeField] private TextMeshProUGUI _playerHPText;
+        [SerializeField] private TextMeshProUGUI _enemyHPText;
         private int _playerAttack;
         private int _enemyAttack;
 
@@ -81,7 +103,7 @@ namespace OnCloud7
                 await GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
             }
             _round++;
-            _enemyCurrentHealth = _enemyTemplate.Health;
+            EnemyCurrentHealth = _enemyTemplate.Health;
             _upgradePoint = 0;
             _enemySkillIndex = 0;
         }
@@ -107,7 +129,7 @@ namespace OnCloud7
                         break;
                     case 2:
                         // 상승 기류: 공격
-                        _enemyCurrentHealth -= power;
+                        EnemyCurrentHealth -= power;
                         break;
                 }
             }
@@ -115,7 +137,7 @@ namespace OnCloud7
             if (CheckRoundEnd()) return;
             
             // 적 공격 차례
-            await ProcessEnemyAttack();
+            await ProcessEnemyAttack(_hitRate);
 
             if (CheckRoundEnd()) return;
             
@@ -141,8 +163,8 @@ namespace OnCloud7
 /*
         public void StateUpdate()
         {
-            PlayerHPText.text = _playerHealth.ToString();
-            EnemyHPText.text = _enemyCurrentHealth.ToString();
+            _playerHPText.text = _playerHealth.ToString();
+            _enemyHPText.text = _enemyCurrentHealth.ToString();
         }
 
         public void PlayerAction(Dictionary<int, int> gains)
@@ -185,7 +207,7 @@ namespace OnCloud7
 
         }
         */
-        private async UniTask ProcessEnemyAttack()
+        private async UniTask ProcessEnemyAttack(float hitRate)
         {
             if (_enemyTemplate == null) return;
             if (_enemySkillIndex >= _enemyTemplate.SkillSequence.Count)
@@ -201,11 +223,16 @@ namespace OnCloud7
             if (damage < 0)
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
-                _enemyCurrentHealth -= damage;
+                EnemyCurrentHealth -= damage;
+            }
+            else if (random.NextDouble() <= hitRate)
+            {
+                _playerHealth -= damage;
+                Debug.Log(ZString.Format("아야! {0}의 피해를 입었다!", damage));
             }
             else
             {
-                _playerHealth -= damage;
+                Debug.Log(ZString.Format("{0}의 확률로 피했다!", 1f - hitRate));
             }
         }
 
@@ -217,7 +244,7 @@ namespace OnCloud7
 
         private bool CheckRoundEnd()
         {
-            if (_enemyCurrentHealth <= 0)
+            if (EnemyCurrentHealth <= 0)
             {
                 // 적 처치
                 LoadNextRound().Forget();

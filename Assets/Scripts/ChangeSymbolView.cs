@@ -23,7 +23,7 @@ namespace OnCloud7
             _symbolModel = symbolModel;
             _beforeSymbolID = symbolModel.Arg1;
             _afterSymbolID = symbolModel.Arg3;
-            Debug.Log(_beforeSymbolID + "," + _afterSymbolID);
+            //Debug.Log(_beforeSymbolID + "," + _afterSymbolID);
             _beforeSymbol.sprite = _sprites[_IDmap[_beforeSymbolID]];
             _afterSymbol.sprite = _sprites[_IDmap[_afterSymbolID]];
         }
