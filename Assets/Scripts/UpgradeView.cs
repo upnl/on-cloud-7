@@ -17,10 +17,13 @@ namespace OnCloud7
         {
             _upgradeTemplate = template;
             _nameText.SetText(_upgradeTemplate.Name);
-            _descriptionText.SetText(_upgradeTemplate.Description);
-            _button.GetComponent<Image>().color = GetLevelColor(_upgradeTemplate.Level);
+            _descriptionText.SetText(DescriptionWithSymbol.GetDescription(_upgradeTemplate.Description,
+                _upgradeTemplate.ArgValue0, _upgradeTemplate.ArgValue1, _upgradeTemplate.ArgValue2,
+                _upgradeTemplate.ArgValue3, _upgradeTemplate.ArgValue4));
+            GetComponent<Image>().color = GetLevelColor(_upgradeTemplate.Level);
             _button.onClick.RemoveAllListeners();
             _button.onClick.AddListener(_upgradeTemplate.InvokeUpgrade);
+            _button.onClick.AddListener(() => GameManager.Instance.UpgradeCompleted = true);
         }
 
         private static Color GetLevelColor(int level)

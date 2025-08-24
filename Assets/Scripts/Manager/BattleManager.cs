@@ -100,39 +100,21 @@ namespace OnCloud7
 
         public async UniTask LoadNextRound()
         {
-            if (_round > 0)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(1));
-            }
-
             _enemyTemplate = GameManager.Instance.EnemyTemplates[_round];
             if (_round > 0)
             {
-                await GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
+                await GameManager.Instance.RoundUpgrade(UpgradeLevel(_upgradePoint));
             }
             else
             {
-                await GameManager.Instance.RoundUpgrade(0, 1);
+                await GameManager.Instance.RoundUpgrade(1);
             }
             _round++;
             EnemyCurrentHealth = _enemyTemplate.Health;
             _enemySkillIndex = 0;
             _enemyDescriptionText.SetText(_enemyTemplate.Description);
             _enemyNameText.SetTextFormat("{0}. {1}", _round, _enemyTemplate.Name);
-            if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage ==
-                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage)
-            {
-                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1})",
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
-            }
-            else
-            {
-                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2})",
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
-            }
+            SetNextEnemyAttackText();
 
             _upgradePoint = 0;
             _statusText.SetText("전투를 시작합니다!");
@@ -192,16 +174,35 @@ namespace OnCloud7
             if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage ==
                 _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage)
             {
-                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1})",
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
+                if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage < 0)
+                {
+                    _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1} 자해)",
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                        -_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
+                }
+                else
+                {
+                    _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1})",
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
+                }
             }
             else
             {
-                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2})",
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
-                    _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+                if (_enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage < 0)
+                {
+                    _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2} 자해)",
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                        -_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                        -_enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+                }
+                else
+                {
+                    _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2})",
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                        _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+                }
             }
         }
 
@@ -306,13 +307,6 @@ namespace OnCloud7
             }
         }
 
-        private async UniTask ProcessDeath()
-        {
-            // TODO
-            Debug.Log("Death");
-            _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜세요.)", _statusText.text);
-        }
-
         private bool CheckRoundEnd()
         {
             if (EnemyCurrentHealth <= 0)
@@ -324,7 +318,8 @@ namespace OnCloud7
             else if (PlayerHealth <= 0)
             {
                 // 플레이어 사망
-                ProcessDeath().Forget();
+                Debug.Log("Death");
+                _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜세요.)", _statusText.text);
                 return true;
             }
 

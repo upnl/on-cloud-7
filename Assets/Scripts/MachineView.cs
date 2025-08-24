@@ -53,8 +53,15 @@ namespace OnCloud7
                     rsv.Initialize(curSymbol);
                     _symbols.Add(rsv);
                 }
-                
+            }
 
+            if (_symbols.Count > 49)
+            {
+                GetComponent<GridLayoutGroup>().cellSize = new Vector2(67f, 67f);
+            }
+            else
+            {
+                GetComponent<GridLayoutGroup>().cellSize = new Vector2(85f, 85f);
             }
         }
 

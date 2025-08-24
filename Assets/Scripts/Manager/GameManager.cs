@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using OnCloud7;
@@ -39,10 +40,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _machineChoice;
     [SerializeField] private GameObject _machineLaunch;
+    [SerializeField] private GameObject _upgradePanel;
     [SerializeField] private GameObject _gameOver;
+    [SerializeField] private List<UpgradeView> _upgradeViews;
+    
     private int curMachineIndex;
 
     [SerializeField] private Button _backButton;
+    
+    public bool UpgradeCompleted { private get; set; }
 
     void Awake()
     {
@@ -84,6 +90,8 @@ public class GameManager : MonoBehaviour
         _machineChoice.SetActive(false);
         SetBackButtonInteractable(false);
         _machineLaunch.SetActive(true);
+        _upgradePanel.SetActive(false);
+        _gameOver.SetActive(false);
         _slotView.Initialize(_machines[curMachineIndex]);
         Spin();
     }
@@ -105,25 +113,36 @@ public class GameManager : MonoBehaviour
 
     public void BackToChoice()
     {
+        SetBackButtonInteractable(false);
         if (BattleManager.EnemyCurrentHealth <= 0)
         {
             BattleManager.LoadNextRound().Forget();
         }
-        _machineChoice.SetActive(true);
-        _machineLaunch.SetActive(false);
-        SetBackButtonInteractable(false);
-        for (int i = 0; i < _machines.Count; i++)
+        else if (BattleManager.PlayerHealth <= 0)
         {
-            _machines[i].SymbolPool.Sort();
-            _machineViews[i].Initialize(_machines[i]);
+            GameOver();
         }
-        BattleManager.SetNextEnemyAttackText();
+        else
+        {
+            _machineChoice.SetActive(true);
+            _machineLaunch.SetActive(false);
+            _upgradePanel.SetActive(false);
+            _gameOver.SetActive(false);
+            for (int i = 0; i < _machines.Count; i++)
+            {
+                _machines[i].SymbolPool.Sort();
+                _machineViews[i].Initialize(_machines[i]);
+            }
+
+            BattleManager.SetNextEnemyAttackText();
+        }
     }
 
     public void GameOver()
     {
         _machineChoice.SetActive(false);
         _machineLaunch.SetActive(false);
+        _upgradePanel.SetActive(false);
         _gameOver.SetActive(true);
         
     }
@@ -352,9 +371,36 @@ public class GameManager : MonoBehaviour
         _machineViews[machineID].Initialize(_machines[machineID]);
     }
 
-    public async UniTask RoundUpgrade(int round, int upgradeGrade)
+    public async UniTask RoundUpgrade(int upgradeGrade)
     {
-        //pass
+        _machineChoice.SetActive(false);
+        _machineLaunch.SetActive(false);
+        _upgradePanel.SetActive(true);
+        _gameOver.SetActive(false);
+        UpgradeCompleted = false;
+        Dictionary<string, List<RoundUpgradeTemplate>> candidates = new();
+        List<string> nameCandidates = new();
         
+        foreach (var template in RoundUpgradeTemplates)
+        {
+            if (template.Level == upgradeGrade)
+            {
+                candidates.TryAdd(template.Name, new List<RoundUpgradeTemplate>());
+                candidates[template.Name].Add(template);
+                if (!nameCandidates.Contains(template.Name))
+                    nameCandidates.Add(template.Name);
+            }
+        }
+        
+        for (int i = 0; i < _upgradeViews.Count; i++)
+        {
+            Random random = new Random(DateTime.UtcNow.Millisecond);
+            int selectedNameIndex = random.Next(nameCandidates.Count);
+            var list = candidates[nameCandidates[selectedNameIndex]];
+            _upgradeViews[i].Initialize(list[random.Next(list.Count)]);
+            nameCandidates.RemoveAt(selectedNameIndex);
+        }
+
+        await UniTask.WaitUntil(this, (t) => t.UpgradeCompleted);
     }
 }
