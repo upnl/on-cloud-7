@@ -85,6 +85,7 @@ namespace OnCloud7
         [SerializeField] private TextMeshProUGUI _enemyHPText;
         [SerializeField] private TextMeshProUGUI _enemyNameText;
         [SerializeField] private TextMeshProUGUI _enemyDescriptionText;
+        [SerializeField] private TextMeshProUGUI _enemyAttackText;
         [SerializeField] private TextMeshProUGUI _statusText;
         private int _playerAttack;
         private int _enemyAttack;
@@ -110,10 +111,14 @@ namespace OnCloud7
             }
             _round++;
             EnemyCurrentHealth = _enemyTemplate.Health;
+            _enemySkillIndex = 0;
             _enemyDescriptionText.SetText(_enemyTemplate.Description);
             _enemyNameText.SetTextFormat("{0}. {1}", _round, _enemyTemplate.Name);
+            _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0}({1}~{2})",
+                _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
             _upgradePoint = 0;
-            _enemySkillIndex = 0;
             _statusText.SetText("전투를 시작합니다!");
             GameManager.Instance.BackToChoice();
         }
@@ -159,6 +164,11 @@ namespace OnCloud7
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
             if (CheckRoundEnd()) return;
+            
+            _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0}({1}~{2})",
+                _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
             
             // 다시 Roll하러 이동
             //GameManager.Instance.BackToChoice();
@@ -242,19 +252,21 @@ namespace OnCloud7
             if (damage < 0)
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
-                EnemyCurrentHealth -= damage;
-                _statusText.SetTextFormat("적이 {0}의 피해를 스스로 입었다!", damage);
+                EnemyCurrentHealth += damage;
+                _statusText.SetTextFormat("{0}\n적이 {1}의 피해를 스스로 입었다!", _statusText.text, damage);
+                
+                await UniTask.Delay(TimeSpan.FromSeconds(1f));
             }
             else if (random.NextDouble() <= hitRate)
             {
                 PlayerHealth -= damage;
                 Debug.Log(ZString.Format("아야! {0}의 피해를 입었다!", damage));
-                _statusText.SetTextFormat("아야! {0}의 피해를 입었다!", damage);
+                _statusText.SetTextFormat("{0}\n아야! {1}의 피해를 입었다!", _statusText.text, damage);
             }
             else
             {
                 Debug.Log(ZString.Format("{0}%의 확률로 피했다!", (1f - hitRate) * 100f));
-                _statusText.SetTextFormat("{0}%의 확률로 피했다!", (1f - hitRate) * 100f);
+                _statusText.SetTextFormat("{0}\n{1}%의 확률로 피했다!", _statusText.text, (1f - hitRate) * 100f);
             }
         }
 
@@ -262,7 +274,7 @@ namespace OnCloud7
         {
             // TODO
             Debug.Log("Death");
-            _statusText.SetText("으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜시기 바랍니다.)");
+            _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜시기 바랍니다.)", _statusText.text);
         }
 
         private bool CheckRoundEnd()
