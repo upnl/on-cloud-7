@@ -9,7 +9,7 @@ namespace OnCloud7
     [Serializable]
     public class RoundUpgradeTemplate : IDataTemplate
     {
-        public enum UpgradeType { Change, Add, Remove, Upgrade, SoloMachine, Cooldown }
+        public enum UpgradeType { Change, Add, Remove, Reset }
         
         [ReadOnly] public int ID;
         [ReadOnly] public UpgradeType Type;
@@ -66,6 +66,27 @@ namespace OnCloud7
                 sb.AppendLine(DescriptionWithSymbol.GetDescription(Description, ArgValue0, ArgValue1, ArgValue2, ArgValue3, ArgValue4));
 
                 return sb.ToString();
+            }
+        }
+
+        public void InvokeUpgrade()
+        {
+            switch (Type)
+            {
+                case UpgradeType.Add:
+                    GameManager.Instance.AddRequest(ArgValue1, ArgValue2, ArgValue0);
+                    if (ArgValue3 >= 0)
+                        GameManager.Instance.AddRequest(Util.SymbolIDToIndex(ArgValue3), ArgValue4, ArgValue0);
+                    break;
+                case UpgradeType.Change:
+                    GameManager.Instance.ChangeRequest(ArgValue1, ArgValue2, ArgValue3, ArgValue0);
+                    break;
+                case UpgradeType.Remove:
+                    GameManager.Instance.RemoveRequest(ArgValue1, ArgValue2, ArgValue3, ArgValue4, ArgValue0);
+                    break;
+                case UpgradeType.Reset:
+                    GameManager.Instance.ResetRequest(ArgValue0);
+                    break;
             }
         }
     }

@@ -125,120 +125,226 @@ public class GameManager : MonoBehaviour
 
     public void ChangeRequest(SymbolModel targetSymbol, int machineID)
     {
+        ChangeRequest(targetSymbol.Arg1, targetSymbol.Arg2, targetSymbol.Arg3, machineID);
+    }
+
+    public void ChangeRequest(int targetSymbolID, int repeat, int afterSymbolID, int machineID)
+    {
         List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
-        int beforeSymbolID = targetSymbol.Arg1;
-        int afterSymbolID = Util.SymbolID(targetSymbol.Arg3);
-        if (beforeSymbolID >= 0 && beforeSymbolID <= 2)
+        int afterSymbolIndex;
+        List<int> changeIndexPool = new List<int>();
+        for (int rep = 0; rep < repeat; rep++)
         {
-            for (int i = 0; i < symbolPool.Count; i++) 
-            { 
-                if (symbolPool[i].ID == beforeSymbolID) 
+            afterSymbolIndex = Util.SymbolIDToIndex(afterSymbolID);
+            switch (targetSymbolID)
+            {
+                case >= 0 and <= 2:
+                case 7:
                 {
-                    _machines[machineID].ChangeSymbol(beforeSymbolID, afterSymbolID);
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID == targetSymbolID)
+                        {
+                            _machines[machineID].ChangeSymbol(targetSymbolID, afterSymbolIndex);
+                            break;
+                        }
+                    }
+
                     break;
                 }
-            }
-        }
-        else if (beforeSymbolID == 777)
-        {
-            List<int> changeIndexPool = new List<int>();
-            for (int i = 0; i < symbolPool.Count; i++)
-            {
-                if (symbolPool[i].ID >= 0 && symbolPool[i].ID <= 2)
+                case 8:
+                case 9:
+                case 10:
+                    changeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID == targetSymbolID)
+                        {
+                            changeIndexPool.Add(i);
+                        }
+                    }
+
+                    if (changeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
+                        _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
+                    }
+                    break;
+                case 777:
                 {
-                    changeIndexPool.Add(i);
+                    changeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID >= 0 && symbolPool[i].ID <= 2)
+                        {
+                            changeIndexPool.Add(i);
+                        }
+                    }
+
+                    if (changeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
+                        _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
+                    }
+
+                    break;
                 }
-            }
-
-            if (changeIndexPool.Count > 0)
-            {
-                Random r = new Random(System.DateTime.Now.Millisecond);
-                int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
-                _machines[machineID].ChangeSymbol(changeIndex, afterSymbolID);
-            }
-
-        }
-        else if (beforeSymbolID == 7777)
-        {
-            List<int> changeIndexPool = new List<int>(); 
-            for (int i = 0; i < symbolPool.Count; i++)
-            {
-                if (symbolPool[i].ID >= 7)
+                case 7777:
                 {
-                    changeIndexPool.Add(i);
-                }
-            }
+                    changeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID >= 7)
+                        {
+                            changeIndexPool.Add(i);
+                        }
+                    }
 
-            if (changeIndexPool.Count > 0)
-            {
-                Random r = new Random(System.DateTime.Now.Millisecond);
-                int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
-                _machines[machineID].ChangeSymbol(changeIndex, afterSymbolID);
+                    if (changeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
+                        _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
+                    }
+
+                    break;
+                }
             }
         }
     }
 
 
-    public void AddRequest(SymbolModel AddSymbol, int machineID)
+    public void AddRequest(SymbolModel addSymbol, int machineID)
     {
-        if (_machines[machineID].SymbolPool.Count < 48)
+        AddRequest(addSymbol.Arg1, addSymbol.Arg2, machineID);
+    }
+    
+    public void AddRequest(int symbolID, int repeat, int machineID)
+    {
+        if (symbolID < 0) return;
+        for (int i = 0; i < repeat; i++)
         {
-            _machines[machineID].AddSymbol(Util.SymbolID(AddSymbol.Arg1));
+            if (_machines[machineID].SymbolPool.Count < 48)
+            {
+                _machines[machineID].AddSymbol(Util.SymbolIDToIndex(symbolID));
+            }
         }
-        
     }
 
-    public void RemoveRequest(SymbolModel RemoveSymbol, int machineID)
+    public void RemoveRequest(SymbolModel removeSymbol, int machineID)
+    {
+        RemoveRequest(removeSymbol.Arg1, removeSymbol.Arg2, machineID);
+    }
+
+    public void RemoveRequest(int targetSymbol1ID, int repeat1, int machineID)
+    {
+        RemoveRequest(targetSymbol1ID, repeat1, -1, -1, machineID);
+    }
+
+    public void RemoveRequest(int targetSymbol1ID, int repeat1, int targetSymbol2ID, int repeat2, int machineID)
     {
         List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
-        int removeTargetID = RemoveSymbol.Arg1;
-        if (removeTargetID >= 0 && removeTargetID <= 2)
+        List<int> removeIndexPool = new List<int>();
+        for (int rep = 0; rep < repeat1; rep++)
         {
-            for (int i = 0; i < symbolPool.Count; i++)
+            Remove(targetSymbol1ID);
+        }
+
+        for (int rep2 = 0; rep2 < repeat2; rep2++)
+        {
+            Remove(targetSymbol2ID);
+        }
+
+        void Remove(int targetSymbolID)
+        {
+            switch (targetSymbolID)
             {
-                if (symbolPool[i].ID == removeTargetID)
+                case >= 0 and <= 2:
+                case 7:
                 {
-                    _machines[machineID].RemoveSymbol(i);
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID == targetSymbolID)
+                        {
+                            _machines[machineID].RemoveSymbol(i);
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+                case 8:
+                case 9:
+                case 10:
+                {
+                    removeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID == targetSymbolID)
+                        {
+                            removeIndexPool.Add(i);
+                        }
+                    }
+
+                    if (removeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
+                        _machines[machineID].RemoveSymbol(removeIndex);
+                    }
+
+                    break;
+                }
+                case 777:
+                {
+                    removeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID >= 0 & symbolPool[i].ID <= 2)
+                        {
+                            removeIndexPool.Add(i);
+                        }
+                    }
+
+                    if (removeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
+                        _machines[machineID].RemoveSymbol(removeIndex);
+                    }
+
+                    break;
+                }
+                case 7777:
+                {
+                    removeIndexPool.Clear();
+                    for (int i = 0; i < symbolPool.Count; i++)
+                    {
+                        if (symbolPool[i].ID >= 7)
+                        {
+                            removeIndexPool.Add(i);
+                        }
+                    }
+
+                    if (removeIndexPool.Count > 0)
+                    {
+                        Random r = new Random(System.DateTime.Now.Millisecond);
+                        int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
+                        _machines[machineID].RemoveSymbol(removeIndex);
+                    }
+
                     break;
                 }
             }
         }
-        else if (removeTargetID == 777)
-        {
-            List<int> removeIndexPool = new List<int>();
-            for (int i = 0; i < symbolPool.Count; i++)
-            {
-                if (symbolPool[i].ID >= 0 & symbolPool[i].ID <= 2)
-                {
-                    removeIndexPool.Add(i);
-                }
-            }
+    }
 
-            if (removeIndexPool.Count > 0)
-            {
-                Random r = new Random(System.DateTime.Now.Millisecond);
-                int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
-                _machines[machineID].RemoveSymbol(removeIndex);
-            }
-        }
-        else if (removeTargetID == 7777)
-        {
-            List<int> removeIndexPool = new List<int>();
-            for (int i = 0; i < symbolPool.Count; i++)
-            {
-                if (symbolPool[i].ID >= 7)
-                {
-                    removeIndexPool.Add(i);
-                }
-            }
-
-            if (removeIndexPool.Count > 0)
-            {
-                Random r = new Random(System.DateTime.Now.Millisecond);
-                int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
-                _machines[machineID].RemoveSymbol(removeIndex);
-            }
-        }
+    public void ResetRequest(int machineID)
+    {
+        _machines[machineID].Initialize(machineID);
+        _machineViews[machineID].Initialize(_machines[machineID]);
     }
 
     public async UniTask RoundUpgrade(int round, int upgradeGrade)

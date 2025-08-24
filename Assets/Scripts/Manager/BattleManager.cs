@@ -119,10 +119,21 @@ namespace OnCloud7
             _enemySkillIndex = 0;
             _enemyDescriptionText.SetText(_enemyTemplate.Description);
             _enemyNameText.SetTextFormat("{0}. {1}", _round, _enemyTemplate.Name);
-            _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0}({1}~{2})",
-                _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
-                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+            if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage ==
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage)
+            {
+                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1})",
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
+            }
+            else
+            {
+                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2})",
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+            }
+
             _upgradePoint = 0;
             _statusText.SetText("전투를 시작합니다!");
             GameManager.Instance.BackToChoice();
@@ -158,7 +169,7 @@ namespace OnCloud7
                         break;
                 }
             }
-            _statusText.SetTextFormat("구름 회피율: {0:0.00}%\n상승 기류 공격: {1}\n눈 공격: {2}", (1f - _hitRate) * 100f, damage, upgradeGain);
+            _statusText.SetTextFormat("상승 기류 공격: {1}\n눈 공격: {2}\n구름 회피율: {0:0.00}%", (1f - _hitRate) * 100f, damage, upgradeGain);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
@@ -170,12 +181,22 @@ namespace OnCloud7
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
             if (CheckRoundEnd()) return;
-            
-            _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0}({1}~{2})",
-                _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
-                _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
-                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
-            
+
+            if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage ==
+                _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage)
+            {
+                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1})",
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage);
+            }
+            else
+            {
+                _enemyAttackText.SetTextFormat("적의 다음 공격:\n{0} ({1}~{2})",
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].Name,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
+                    _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
+            }
+
             // 다시 Roll하러 이동
             //GameManager.Instance.BackToChoice();
             GameManager.Instance.SetBackButtonInteractable(true);
@@ -185,11 +206,11 @@ namespace OnCloud7
         {
             switch (upgradePoint)
             {
-                case < 50:
+                case < 25:
                     return 0;
-                case < 150:
+                case < 60:
                     return 1;
-                case < 500:
+                case < 250:
                     return 2;
                 default:
                     return 3;

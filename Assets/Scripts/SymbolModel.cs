@@ -50,11 +50,15 @@ namespace OnCloud7
 
         public int CompareTo(SymbolModel other)
         {
-            if (this.ID < other.ID)
+            int a = this.ID;
+            int b = other.ID;
+            if (a is >= 3 and < 6) a -= 3;
+            if (b is >= 3 and < 6) b -= 3;
+            if (a < b)
             {
                 return -1;
             }
-            else if (this.ID > other.ID)
+            else if (a > b)
             {
                 return 1;
             }

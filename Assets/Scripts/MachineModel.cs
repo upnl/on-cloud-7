@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -43,30 +44,31 @@ public class MachineModel
 
         if (_id == 1)
         {
+            Random random = new Random(DateTime.UtcNow.Millisecond);
             //temp change symbols
             for (int i = 0; i < 3; i++)
             {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i + 10]));
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(8, 48)]));
             }
 
             //temp add symbols
             for (int i = 0; i < 3; i++)
             {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[58 + i]));
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(48, 68)]));
             }
 
             //temp remove symbols
             for (int i = 0; i < 3; i++)
             {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[78 + i]));
+                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]));
             }
         }
 
-        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));  // TODO: 원래는 6을 넣어야 함
+        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));  // TODO: 원래는 6을 넣어야 함
+        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));
         _result = new List<SymbolModel>();
         
-
-        
+        _symbolPool.Sort();
     }
 
     public void ChangeSymbol(int beforeIndex, int afterIndex)
@@ -83,6 +85,7 @@ public class MachineModel
     {
         _symbolPool.RemoveAt(removeIndex);
     }
+    
     public void Roll()
     {
         _result.Clear();
@@ -242,24 +245,42 @@ public class MachineModel
     {
         foreach (SymbolModel symbol in result)
         {
-            if (symbol.Type == SymbolTemplate.SymbolType.Change)
+            switch (symbol.Type)
             {
-                Debug.Log("Change");
-                GameManager.Instance.ChangeRequest(symbol, symbol.Arg0);
-            }
-            else if (symbol.Type == SymbolTemplate.SymbolType.Add)
-            {
-                Debug.Log("Add");
-                GameManager.Instance.AddRequest(symbol, symbol.Arg0);
-            }
-            else if (symbol.Type == SymbolTemplate.SymbolType.Remove)
-            {
-                Debug.Log("Remove");
-                GameManager.Instance.RemoveRequest(symbol, symbol.Arg0);
-            }
-            else if (symbol.Type == SymbolTemplate.SymbolType.Random)
-            {
-                //pass
+                case SymbolTemplate.SymbolType.Change:
+                    Debug.Log("Change");
+                    GameManager.Instance.ChangeRequest(symbol, symbol.Arg0);
+                    break;
+                case SymbolTemplate.SymbolType.Add:
+                    Debug.Log("Add");
+                    GameManager.Instance.AddRequest(symbol, symbol.Arg0);
+                    break;
+                case SymbolTemplate.SymbolType.Remove:
+                    Debug.Log("Remove");
+                    GameManager.Instance.RemoveRequest(symbol, symbol.Arg0);
+                    break;
+                case SymbolTemplate.SymbolType.Random:
+                    Random random = new Random();
+                    SymbolModel chosen;
+                    switch (random.Next(0, 3))
+                    {
+                        case 0:
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(8, 48)]);
+                            GameManager.Instance.ChangeRequest(chosen, chosen.Arg0);
+                            Debug.Log("Random -> Change");
+                            break;
+                        case 1:
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(48, 68)]);
+                            GameManager.Instance.AddRequest(chosen, chosen.Arg0);
+                            Debug.Log("Random -> Add");
+                            break;
+                        case 2:
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]);
+                            GameManager.Instance.RemoveRequest(chosen, chosen.Arg0);
+                            Debug.Log("Random -> Remove");
+                            break;
+                    }
+                    break;
             }
         }
     }
