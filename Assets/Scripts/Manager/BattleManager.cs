@@ -83,6 +83,9 @@ namespace OnCloud7
 
         [SerializeField] private TextMeshProUGUI _playerHPText;
         [SerializeField] private TextMeshProUGUI _enemyHPText;
+        [SerializeField] private TextMeshProUGUI _enemyNameText;
+        [SerializeField] private TextMeshProUGUI _enemyDescriptionText;
+        [SerializeField] private TextMeshProUGUI _statusText;
         private int _playerAttack;
         private int _enemyAttack;
 
@@ -90,9 +93,8 @@ namespace OnCloud7
         {
             _gameStarted = true;
             _round = 0;
-            _playerHealth = 100;
-            GameManager.Instance.RoundUpgrade(0, 1);
-            LoadNextRound();
+            PlayerHealth = 100;
+            LoadNextRound().Forget();
         }
 
         public async UniTask LoadNextRound()
@@ -102,10 +104,17 @@ namespace OnCloud7
             {
                 await GameManager.Instance.RoundUpgrade(_round, UpgradeLevel(_upgradePoint));
             }
+            else
+            {
+                await GameManager.Instance.RoundUpgrade(0, 1);
+            }
             _round++;
             EnemyCurrentHealth = _enemyTemplate.Health;
+            _enemyDescriptionText.SetText(_enemyTemplate.Description);
+            _enemyNameText.SetTextFormat("{0}. {1}", _round, _enemyTemplate.Name);
             _upgradePoint = 0;
             _enemySkillIndex = 0;
+            _statusText.SetText("전투를 시작합니다!");
         }
 
         public async UniTask ProcessRollResult(Dictionary<int, int> gains)
@@ -113,7 +122,9 @@ namespace OnCloud7
             // 기본 문양만 여기서 처리합니다.
             // 특수 문양은 MachineModel.SpecialEffects() 참고.
             _hitRate = 1f;
-            
+
+            int upgradeGain = 0;
+            int damage = 0;
             foreach (var (symbolID, power) in gains)
             {
                 SymbolTemplate symbol = GameManager.Instance.SymbolTemplates[symbolID];
@@ -122,22 +133,29 @@ namespace OnCloud7
                     case 0:
                         // 눈: 깨달음의 경지 상승
                         _upgradePoint += power;
+                        upgradeGain = power;
                         break;
                     case 1:
                         // 클라우드: 회피
-                        _hitRate *= (1f - power / 100f);
+                        _hitRate *= (1f - power / 10f);
                         break;
                     case 2:
                         // 상승 기류: 공격
                         EnemyCurrentHealth -= power;
+                        damage = power;
                         break;
                 }
             }
+            _statusText.SetTextFormat("회피율: {0}%\n공격: {1}\n깨달음: +{2}", (1f - _hitRate) * 100f, damage, upgradeGain);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
             if (CheckRoundEnd()) return;
             
             // 적 공격 차례
             await ProcessEnemyAttack(_hitRate);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
             if (CheckRoundEnd()) return;
             
@@ -224,15 +242,18 @@ namespace OnCloud7
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
                 EnemyCurrentHealth -= damage;
+                _statusText.SetTextFormat("적이 {0}의 피해를 스스로 입었다!", damage);
             }
             else if (random.NextDouble() <= hitRate)
             {
-                _playerHealth -= damage;
+                PlayerHealth -= damage;
                 Debug.Log(ZString.Format("아야! {0}의 피해를 입었다!", damage));
+                _statusText.SetTextFormat("아야! {0}의 피해를 입었다!", damage);
             }
             else
             {
-                Debug.Log(ZString.Format("{0}의 확률로 피했다!", 1f - hitRate));
+                Debug.Log(ZString.Format("{0}%의 확률로 피했다!", (1f - hitRate) * 100f));
+                _statusText.SetTextFormat("{0}%의 확률로 피했다!", (1f - hitRate) * 100f);
             }
         }
 
@@ -250,7 +271,7 @@ namespace OnCloud7
                 LoadNextRound().Forget();
                 return true;
             }
-            else if (_playerHealth <= 0)
+            else if (PlayerHealth <= 0)
             {
                 // 플레이어 사망
                 ProcessDeath().Forget();
