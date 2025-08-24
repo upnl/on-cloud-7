@@ -120,7 +120,8 @@ namespace OnCloud7
             if (CheckRoundEnd()) return;
             
             // 다시 Roll하러 이동
-            GameManager.Instance.BackToChoice();
+            //GameManager.Instance.BackToChoice();
+            GameManager.Instance.SetBackButtonInteractable(true);
         }
 
         private int UpgradeLevel(int upgradePoint)

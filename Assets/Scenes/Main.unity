@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Back
+  m_text: "\uB2E4\uC74C \uD134!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 648015787a0293e42ac4bd86e5d0fca1, type: 2}
   m_sharedMaterial: {fileID: 5037562126233645974, guid: 648015787a0293e42ac4bd86e5d0fca1, type: 2}
@@ -1592,7 +1592,6 @@ MonoBehaviour:
   changeSymbolPrefab: {fileID: 2688038876650202048, guid: 0ee2b33eb37bb7643b487dd19974f13b, type: 3}
   addSymbolPrefab: {fileID: 6993274491070480122, guid: b0b825679a7b59047858cad711f75d3e, type: 3}
   removeSymbolPrefab: {fileID: 3365228078985771840, guid: 8c9625fd7101fa64486e933ddf4c349f, type: 3}
-  _battleManager: {fileID: 1011772257}
 --- !u!114 &822029957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4075,9 +4074,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 822029956}
     - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
-      propertyPath: _battleManager
+      propertyPath: _backButton
       value: 
-      objectReference: {fileID: 1011772257}
+      objectReference: {fileID: 2005337164}
     - target: {fileID: 4080631309744203672, guid: 1221dc784fe3c4e41aa1d0bc3608b1e3, type: 3}
       propertyPath: _machineChoice
       value: 

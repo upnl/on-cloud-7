@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using OnCloud7;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class GameManager : MonoBehaviour
@@ -39,6 +40,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _machineLaunch;
     private int curMachineIndex;
 
+    [SerializeField] private Button _backButton;
+
     void Awake()
     {
         if (Instance != null)
@@ -67,9 +70,6 @@ public class GameManager : MonoBehaviour
             _machineViews[i].Initialize(machine);
         }
         
-        
-        
-        
     }
 
     public void StartSpin(int curMachineIndex)
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         }
         this.curMachineIndex = curMachineIndex;
         _machineChoice.SetActive(false);
+        SetBackButtonInteractable(false);
         _machineLaunch.SetActive(true);
         _slotView.Initialize(_machines[curMachineIndex]);
         Spin();
@@ -95,10 +96,16 @@ public class GameManager : MonoBehaviour
         _slotView.SymbolsRender(result);
     }
 
+    public void SetBackButtonInteractable(bool interactable)
+    {
+        _backButton.interactable = interactable;
+    }
+
     public void BackToChoice()
     {
         _machineChoice.SetActive(true);
         _machineLaunch.SetActive(false);
+        SetBackButtonInteractable(false);
         for (int i = 0; i < _machines.Count; i++)
         {
             _machineViews[i].Initialize(_machines[i]);
