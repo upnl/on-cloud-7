@@ -137,8 +137,9 @@ namespace OnCloud7
                 switch (symbolID)
                 {
                     case 0:
-                        // 눈: 깨달음의 경지 상승
+                        // 눈: 깨달음의 경지 상승 (이었지만 임시로 이것도 피해로 취급)
                         _upgradePoint += power;
+                        EnemyCurrentHealth -= power;    // TODO: 임시
                         upgradeGain = power;
                         break;
                     case 1:
@@ -152,7 +153,7 @@ namespace OnCloud7
                         break;
                 }
             }
-            _statusText.SetTextFormat("회피율: {0}%\n공격: {1}\n깨달음: +{2}", (1f - _hitRate) * 100f, damage, upgradeGain);
+            _statusText.SetTextFormat("회피율: {0}%\n물리 공격: {1}\n깨달음 공격: {2}", (1f - _hitRate) * 100f, damage, upgradeGain);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
@@ -253,7 +254,7 @@ namespace OnCloud7
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
                 EnemyCurrentHealth += damage;
-                _statusText.SetTextFormat("{0}\n적이 {1}의 피해를 스스로 입었다!", _statusText.text, damage);
+                _statusText.SetTextFormat("{0}\n적이 {1}의 피해를 스스로 입었다!", _statusText.text, -damage);
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f));
             }
@@ -270,6 +271,10 @@ namespace OnCloud7
             }
 
             _enemySkillIndex++;
+            if (_enemySkillIndex >= _enemyTemplate.SkillSequence.Count)
+            {
+                _enemySkillIndex = 0;
+            }
         }
 
         private async UniTask ProcessDeath()

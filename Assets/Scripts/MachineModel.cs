@@ -62,7 +62,7 @@ public class MachineModel
             }
         }
 
-        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
+        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));  // TODO: 원래는 6을 넣어야 함
         _result = new List<SymbolModel>();
         
 
