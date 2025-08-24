@@ -42,29 +42,27 @@ public class MachineModel
             }
         }
 
-        /*
         if (_id == 1)
         {
             Random random = new Random(DateTime.UtcNow.Millisecond);
             //temp change symbols
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(8, 48)]));
             }
 
             //temp add symbols
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(48, 68)]));
             }
 
             //temp remove symbols
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]));
             }
         }
-        */
 
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));

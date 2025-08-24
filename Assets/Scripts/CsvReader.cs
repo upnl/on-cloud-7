@@ -524,6 +524,13 @@ namespace OnCloud7
                                     continue;
                                 }
 
+                                if (original.Type is RoundUpgradeTemplate.UpgradeType.Add or
+                                        RoundUpgradeTemplate.UpgradeType.Remove &&
+                                    original.Arg1[i1] == original.Arg3[i3])
+                                {
+                                    continue;
+                                }
+
                                 for (int i4 = 0; i4 < original.Arg4.Count; i4++)
                                 {
                                     var duplicated = new RoundUpgradeTemplate();
