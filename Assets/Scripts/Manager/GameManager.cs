@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using OnCloud7;
 using UnityEngine;
 using Random = System.Random;
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
         _machines[curMachineIndex].Roll();
     }
 
-    public void SymbolsRender(List<SymbolModel> result)
+    public void RenderSymbols(List<SymbolModel> result)
     {
         _slotView.SymbolsRender(result);
     }
@@ -105,11 +106,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ChangeRequest(SymbolModel ChangeSymbol, int machineID)
+    public void ChangeRequest(SymbolModel targetSymbol, int machineID)
     {
         List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
-        int beforeSymbolID = ChangeSymbol.Arg1;
-        int afterSymbolID = Util.SymbolID(ChangeSymbol.Arg3);
+        int beforeSymbolID = targetSymbol.Arg1;
+        int afterSymbolID = Util.SymbolID(targetSymbol.Arg3);
         if (beforeSymbolID >= 0 && beforeSymbolID <= 2)
         {
             for (int i = 0; i < symbolPool.Count; i++) 
@@ -223,7 +224,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RoundUpgrade(int round, int upgradeGrade)
+    public async UniTask RoundUpgrade(int round, int upgradeGrade)
     {
         //pass
     }

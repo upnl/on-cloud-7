@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3519251983235488111}
   - component: {fileID: 4080631309744203672}
+  - component: {fileID: 372492450641187659}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,8 +45,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ca677248534ff04da29ee75a08a9a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _battleManager: {fileID: 372492450641187659}
   EnemySkillTemplateData: {fileID: 4900000, guid: 387d70fd8ea2e424e8bd603f33107a13, type: 3}
   EnemyTemplateData: {fileID: 4900000, guid: 7d16592f51ac7fe4b8e2e479b31c8bda, type: 3}
-  RewardTemplateData: {fileID: 4900000, guid: 69940e5a8422c8d47bd7a25bb51bcae2, type: 3}
   RoundUpgradeTemplateData: {fileID: 4900000, guid: dd7effa5c565a22428b17a3cdcc5485b, type: 3}
   SymbolTemplateData: {fileID: 4900000, guid: e3e30c0d56e763846ad238a39790b763, type: 3}
+  _machineViews:
+  - {fileID: 0}
+  - {fileID: 0}
+  _slotView: {fileID: 0}
+  _machineChoice: {fileID: 0}
+  _machineLaunch: {fileID: 0}
+--- !u!114 &372492450641187659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654641349945012650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4a7d36f785089429370451c23b5dbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
