@@ -182,6 +182,13 @@ namespace OnCloud7
 
             if (CheckRoundEnd()) return;
 
+            // 다시 Roll하러 이동
+            //GameManager.Instance.BackToChoice();
+            GameManager.Instance.SetBackButtonInteractable(true);
+        }
+
+        public void SetNextEnemyAttackText()
+        {
             if (_enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage ==
                 _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage)
             {
@@ -196,10 +203,6 @@ namespace OnCloud7
                     _enemyTemplate.SkillSequence[_enemySkillIndex].MinDamage,
                     _enemyTemplate.SkillSequence[_enemySkillIndex].MaxDamage);
             }
-
-            // 다시 Roll하러 이동
-            //GameManager.Instance.BackToChoice();
-            GameManager.Instance.SetBackButtonInteractable(true);
         }
 
         private int UpgradeLevel(int upgradePoint)
@@ -315,7 +318,7 @@ namespace OnCloud7
             if (EnemyCurrentHealth <= 0)
             {
                 // 적 처치
-                LoadNextRound().Forget();
+                // GameManager의 BackToChoice() 호출 시 다음 라운드로 넘어감
                 return true;
             }
             else if (PlayerHealth <= 0)

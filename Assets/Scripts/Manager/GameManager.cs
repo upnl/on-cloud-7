@@ -105,14 +105,19 @@ public class GameManager : MonoBehaviour
 
     public void BackToChoice()
     {
+        if (BattleManager.EnemyCurrentHealth <= 0)
+        {
+            BattleManager.LoadNextRound().Forget();
+        }
         _machineChoice.SetActive(true);
         _machineLaunch.SetActive(false);
         SetBackButtonInteractable(false);
         for (int i = 0; i < _machines.Count; i++)
         {
+            _machines[i].SymbolPool.Sort();
             _machineViews[i].Initialize(_machines[i]);
         }
-
+        BattleManager.SetNextEnemyAttackText();
     }
 
     public void GameOver()
@@ -143,7 +148,7 @@ public class GameManager : MonoBehaviour
                 {
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID == targetSymbolID)
+                        if (symbolPool[i].ID == targetSymbolID && !symbolPool[i].IsImmutable)
                         {
                             _machines[machineID].ChangeSymbol(targetSymbolID, afterSymbolIndex);
                             break;
@@ -158,7 +163,7 @@ public class GameManager : MonoBehaviour
                     changeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID == targetSymbolID)
+                        if (symbolPool[i].ID == targetSymbolID && !symbolPool[i].IsImmutable)
                         {
                             changeIndexPool.Add(i);
                         }
@@ -176,7 +181,7 @@ public class GameManager : MonoBehaviour
                     changeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID >= 0 && symbolPool[i].ID <= 2)
+                        if (symbolPool[i].ID >= 0 && symbolPool[i].ID <= 2 && !symbolPool[i].IsImmutable)
                         {
                             changeIndexPool.Add(i);
                         }
@@ -196,7 +201,7 @@ public class GameManager : MonoBehaviour
                     changeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID >= 7)
+                        if (symbolPool[i].ID >= 7 && !symbolPool[i].IsImmutable)
                         {
                             changeIndexPool.Add(i);
                         }
@@ -226,7 +231,7 @@ public class GameManager : MonoBehaviour
         if (symbolID < 0) return;
         for (int i = 0; i < repeat; i++)
         {
-            if (_machines[machineID].SymbolPool.Count < 48)
+            if (_machines[machineID].SymbolPool.Count < 81)
             {
                 _machines[machineID].AddSymbol(Util.SymbolIDToIndex(symbolID));
             }
@@ -266,7 +271,7 @@ public class GameManager : MonoBehaviour
                 {
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID == targetSymbolID)
+                        if (symbolPool[i].ID == targetSymbolID && !symbolPool[i].IsImmutable)
                         {
                             _machines[machineID].RemoveSymbol(i);
                             break;
@@ -282,7 +287,7 @@ public class GameManager : MonoBehaviour
                     removeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID == targetSymbolID)
+                        if (symbolPool[i].ID == targetSymbolID && !symbolPool[i].IsImmutable)
                         {
                             removeIndexPool.Add(i);
                         }
@@ -302,7 +307,7 @@ public class GameManager : MonoBehaviour
                     removeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID >= 0 & symbolPool[i].ID <= 2)
+                        if (symbolPool[i].ID >= 0 & symbolPool[i].ID <= 2 && !symbolPool[i].IsImmutable)
                         {
                             removeIndexPool.Add(i);
                         }
@@ -322,7 +327,7 @@ public class GameManager : MonoBehaviour
                     removeIndexPool.Clear();
                     for (int i = 0; i < symbolPool.Count; i++)
                     {
-                        if (symbolPool[i].ID >= 7)
+                        if (symbolPool[i].ID >= 7 && !symbolPool[i].IsImmutable)
                         {
                             removeIndexPool.Add(i);
                         }
@@ -350,5 +355,6 @@ public class GameManager : MonoBehaviour
     public async UniTask RoundUpgrade(int round, int upgradeGrade)
     {
         //pass
+        
     }
 }

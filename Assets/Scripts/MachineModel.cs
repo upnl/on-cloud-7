@@ -42,6 +42,7 @@ public class MachineModel
             }
         }
 
+        /*
         if (_id == 1)
         {
             Random random = new Random(DateTime.UtcNow.Millisecond);
@@ -63,8 +64,9 @@ public class MachineModel
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]));
             }
         }
+        */
 
-        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));  // TODO: 원래는 6을 넣어야 함
+        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));
         _result = new List<SymbolModel>();
         
@@ -73,17 +75,22 @@ public class MachineModel
 
     public void ChangeSymbol(int beforeIndex, int afterIndex)
     {
-        _symbolPool[beforeIndex] = new SymbolModel(GameManager.Instance.SymbolTemplates[afterIndex]);
+        SymbolTemplate template = GameManager.Instance.SymbolTemplates[afterIndex];
+        if (!_symbolPool[beforeIndex].IsImmutable && !template.IsImmutable)
+            _symbolPool[beforeIndex] = new SymbolModel(GameManager.Instance.SymbolTemplates[afterIndex]);
     }
 
     public void AddSymbol(int addIndex)
     {
-        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[addIndex]));
+        SymbolTemplate template = GameManager.Instance.SymbolTemplates[addIndex];
+        if (!template.IsImmutable)
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[addIndex]));
     }
 
     public void RemoveSymbol(int removeIndex)
     {
-        _symbolPool.RemoveAt(removeIndex);
+        if (!_symbolPool[removeIndex].IsImmutable)
+            _symbolPool.RemoveAt(removeIndex);
     }
     
     public void Roll()
