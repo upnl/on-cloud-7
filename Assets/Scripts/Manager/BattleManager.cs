@@ -135,10 +135,10 @@ namespace OnCloud7
                 switch (symbolID)
                 {
                     case 0:
-                        // 눈: 깨달음의 경지 상승 (이었지만 임시로 이것도 피해로 취급)
+                        // 눈: 깨달음의 경지 상승 & 2/3배 공격
                         _upgradePoint += power;
-                        EnemyCurrentHealth -= power;    // TODO: 임시
-                        upgradeGain = power;
+                        upgradeGain = power * 2 / 3;
+                        EnemyCurrentHealth -= upgradeGain;
                         break;
                     case 1:
                         // 클라우드: 회피
@@ -151,7 +151,7 @@ namespace OnCloud7
                         break;
                 }
             }
-            _statusText.SetTextFormat("상승 기류 공격: {1}\n눈 공격: {2}\n구름 회피율: {0:0.00}%", (1f - _hitRate) * 100f, damage, upgradeGain);
+            _statusText.SetTextFormat("상승 기류 + 눈 공격: {1} + {2}\n구름 회피율: {0:0.00}%\n누적 깨달음: {3}", (1f - _hitRate) * 100f, damage, upgradeGain, _upgradePoint);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
@@ -284,7 +284,7 @@ namespace OnCloud7
             {
                 // 음수 피해량은 적이 자기 자신에게 입히는 피해
                 EnemyCurrentHealth += damage;
-                _statusText.SetTextFormat("{0}\n적이 {1}의 HP를 스스로 잃었다!", _statusText.text, -damage);
+                _statusText.SetTextFormat("{0}\n적이 {1}의 HP를 잃었다!", _statusText.text, -damage);
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(1f));
             }
@@ -292,12 +292,12 @@ namespace OnCloud7
             {
                 PlayerHealth -= damage;
                 Debug.Log(ZString.Format("아야! {0}의 HP를 잃었다!", damage));
-                _statusText.SetTextFormat("{0}\n아야! {1}의 HP를 잃었다!", _statusText.text, damage);
+                _statusText.SetTextFormat("{0}\n아야! {1}의 공격을 받았다!", _statusText.text, damage);
             }
             else
             {
                 Debug.Log(ZString.Format("{0:0.00}%의 확률로 피했다!", (1f - hitRate) * 100f));
-                _statusText.SetTextFormat("{0}\n{1:0.00}%의 확률로 {2}의 적 공격을 피했다!", _statusText.text, (1f - hitRate) * 100f, damage);
+                _statusText.SetTextFormat("{0}\n{1}의 적 공격을 피했다!", _statusText.text, damage);
             }
 
             _enemySkillIndex++;
@@ -313,6 +313,8 @@ namespace OnCloud7
             {
                 // 적 처치
                 // GameManager의 BackToChoice() 호출 시 다음 라운드로 넘어감
+                _statusText.SetTextFormat("{0}\n{1}의 벽을 넘었다!!", _statusText.text, _enemyTemplate.Name);
+                GameManager.Instance.SetBackButtonInteractable(true);
                 return true;
             }
             else if (PlayerHealth <= 0)
