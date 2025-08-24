@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
         List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
         int afterSymbolIndex;
         List<int> changeIndexPool = new List<int>();
+        Random r = Util.Random;
         for (int rep = 0; rep < repeat; rep++)
         {
             afterSymbolIndex = Util.SymbolIDToIndex(afterSymbolID);
@@ -190,7 +191,6 @@ public class GameManager : MonoBehaviour
 
                     if (changeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
                         _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
                     }
@@ -208,7 +208,6 @@ public class GameManager : MonoBehaviour
 
                     if (changeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
                         _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
                     }
@@ -228,7 +227,6 @@ public class GameManager : MonoBehaviour
 
                     if (changeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
                         _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
                     }
@@ -271,6 +269,7 @@ public class GameManager : MonoBehaviour
     {
         List<SymbolModel> symbolPool = _machines[machineID].SymbolPool;
         List<int> removeIndexPool = new List<int>();
+        Random r = Util.Random;
         for (int rep = 0; rep < repeat1; rep++)
         {
             Remove(targetSymbol1ID);
@@ -314,7 +313,6 @@ public class GameManager : MonoBehaviour
 
                     if (removeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
                         _machines[machineID].RemoveSymbol(removeIndex);
                     }
@@ -334,7 +332,6 @@ public class GameManager : MonoBehaviour
 
                     if (removeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
                         _machines[machineID].RemoveSymbol(removeIndex);
                     }
@@ -354,7 +351,6 @@ public class GameManager : MonoBehaviour
 
                     if (removeIndexPool.Count > 0)
                     {
-                        Random r = new Random(System.DateTime.Now.Millisecond);
                         int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
                         _machines[machineID].RemoveSymbol(removeIndex);
                     }
@@ -394,10 +390,9 @@ public class GameManager : MonoBehaviour
         
         for (int i = 0; i < _upgradeViews.Count; i++)
         {
-            Random random = new Random(DateTime.UtcNow.Millisecond);
-            int selectedNameIndex = random.Next(nameCandidates.Count);
+            int selectedNameIndex = Util.Random.Next(nameCandidates.Count);
             var list = candidates[nameCandidates[selectedNameIndex]];
-            _upgradeViews[i].Initialize(list[random.Next(list.Count)]);
+            _upgradeViews[i].Initialize(list[Util.Random.Next(list.Count)]);
             nameCandidates.RemoveAt(selectedNameIndex);
         }
 

@@ -9,7 +9,7 @@ namespace OnCloud7
     [Serializable]
     public class RoundUpgradeTemplate : IDataTemplate
     {
-        public enum UpgradeType { Change, Add, Remove, Reset }
+        public enum UpgradeType { Change, Add, Remove, Reset, Heal }
         
         [ReadOnly] public int ID;
         [ReadOnly] public UpgradeType Type;
@@ -86,6 +86,11 @@ namespace OnCloud7
                     break;
                 case UpgradeType.Reset:
                     GameManager.Instance.ResetRequest(ArgValue0);
+                    break;
+                case UpgradeType.Heal:
+                    GameManager.Instance.BattleManager.PlayerHealth += ArgValue0;
+                    if (GameManager.Instance.BattleManager.PlayerHealth > 100)
+                        GameManager.Instance.BattleManager.PlayerHealth = 100;
                     break;
             }
         }

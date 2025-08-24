@@ -135,10 +135,10 @@ namespace OnCloud7
                 switch (symbolID)
                 {
                     case 0:
-                        // 눈: 깨달음의 경지 상승 & 2/3배 공격
+                        // 눈: 깨달음의 경지 상승 & 1/2배 공격
                         _upgradePoint += power;
-                        upgradeGain = power * 2 / 3;
-                        EnemyCurrentHealth -= upgradeGain;
+                        upgradeGain = power;
+                        EnemyCurrentHealth -= upgradeGain / 2;
                         break;
                     case 1:
                         // 클라우드: 회피
@@ -151,7 +151,7 @@ namespace OnCloud7
                         break;
                 }
             }
-            _statusText.SetTextFormat("상승 기류 + 눈 공격: {1} + {2}\n구름 회피율: {0:0.00}%\n누적 깨달음: {3}", (1f - _hitRate) * 100f, damage, upgradeGain, _upgradePoint);
+            _statusText.SetTextFormat("상승 기류와 눈 공격:\t{1}\n눈 깨달음: {2} → 누적: {3}\n클라우드 회피율:\t{0:0.00}%", (1f - _hitRate) * 100f, damage + upgradeGain / 2, upgradeGain, _upgradePoint);
 
             await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
 
@@ -212,9 +212,9 @@ namespace OnCloud7
             {
                 case < 25:
                     return 0;
-                case < 60:
+                case < 50:
                     return 1;
-                case < 250:
+                case < 200:
                     return 2;
                 default:
                     return 3;
@@ -292,12 +292,12 @@ namespace OnCloud7
             {
                 PlayerHealth -= damage;
                 Debug.Log(ZString.Format("아야! {0}의 HP를 잃었다!", damage));
-                _statusText.SetTextFormat("{0}\n아야! {1}의 공격을 받았다!", _statusText.text, damage);
+                _statusText.SetTextFormat("{0}\n아야! {1}의 공격을 맞았다!", _statusText.text, damage);
             }
             else
             {
                 Debug.Log(ZString.Format("{0:0.00}%의 확률로 피했다!", (1f - hitRate) * 100f));
-                _statusText.SetTextFormat("{0}\n{1}의 적 공격을 피했다!", _statusText.text, damage);
+                _statusText.SetTextFormat("{0}\n{1}의 적 공격을 회피했다!", _statusText.text, damage);
             }
 
             _enemySkillIndex++;

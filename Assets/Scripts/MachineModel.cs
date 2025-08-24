@@ -23,15 +23,16 @@ public class MachineModel
     
     public BattleManager BattleManager;
 
-    
+
 
     public void Initialize(int id)
     {
         _id = id;
         _symbolPool = new List<SymbolModel>();
+        int normalCount = _id == 0 ? 6 : 3;
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 6; j++)
+            for (int j = 0; j < normalCount; j++)
             {
                 _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[i]));
             }
@@ -42,32 +43,29 @@ public class MachineModel
             }
         }
 
-        if (_id == 1)
+        int specialCount = _id == 0 ? 1 : 3;
+        // change symbols
+        for (int i = 0; i < specialCount; i++)
         {
-            Random random = new Random(DateTime.UtcNow.Millisecond);
-            //temp change symbols
-            for (int i = 0; i < 1; i++)
-            {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(8, 48)]));
-            }
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(8, 52)]));
+        }
 
-            //temp add symbols
-            for (int i = 0; i < 1; i++)
-            {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(48, 68)]));
-            }
+        // add symbols
+        for (int i = 0; i < specialCount; i++)
+        {
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(52, 72)]));
+        }
 
-            //temp remove symbols
-            for (int i = 0; i < 1; i++)
-            {
-                _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]));
-            }
+        // remove symbols
+        for (int i = 0; i < specialCount; i++)
+        {
+            _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(72, 82)]));
         }
 
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));
         _result = new List<SymbolModel>();
-        
+
         _symbolPool.Sort();
     }
 
@@ -81,7 +79,7 @@ public class MachineModel
     public void AddSymbol(int addIndex)
     {
         SymbolTemplate template = GameManager.Instance.SymbolTemplates[addIndex];
-        if (!template.IsImmutable)
+        if (!template.IsImmutable && _symbolPool.Count < 81)
             _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[addIndex]));
     }
 
@@ -94,10 +92,9 @@ public class MachineModel
     public void Roll()
     {
         _result.Clear();
-        Random r = new Random(System.DateTime.Now.Millisecond);
         for (int i = 0; i < 9; i++)
         {
-            int index = r.Next(_symbolPool.Count - 1);
+            int index = Util.Random.Next(_symbolPool.Count - 1);
             _result.Add(_symbolPool[index]);
             _symbolPool.RemoveAt(index);
         }
@@ -265,22 +262,21 @@ public class MachineModel
                     GameManager.Instance.RemoveRequest(symbol, symbol.Arg0);
                     break;
                 case SymbolTemplate.SymbolType.Random:
-                    Random random = new Random();
                     SymbolModel chosen;
-                    switch (random.Next(0, 3))
+                    switch (Util.Random.Next(0, 3))
                     {
                         case 0:
-                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(8, 48)]);
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(8, 52)]);
                             GameManager.Instance.ChangeRequest(chosen, chosen.Arg0);
                             Debug.Log("Random -> Change");
                             break;
                         case 1:
-                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(48, 68)]);
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(52, 72)]);
                             GameManager.Instance.AddRequest(chosen, chosen.Arg0);
                             Debug.Log("Random -> Add");
                             break;
                         case 2:
-                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[random.Next(68, 78)]);
+                            chosen = new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(72, 82)]);
                             GameManager.Instance.RemoveRequest(chosen, chosen.Arg0);
                             Debug.Log("Random -> Remove");
                             break;
