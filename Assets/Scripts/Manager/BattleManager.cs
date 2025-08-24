@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace OnCloud7
 {
@@ -49,6 +52,11 @@ namespace OnCloud7
          * 7. 적 특수 패턴 (예: 군대의 전역 등)
          */
 
+        [SerializeField] private TextMeshProUGUI PlayerHPText;
+        [SerializeField] private TextMeshProUGUI EnemyHPText;
+        private int _playerAttack;
+        private int _enemyAttack;
+
         public void Initialize()
         {
             _gameStarted = true;
@@ -85,5 +93,52 @@ namespace OnCloud7
                     return 3;
             }
         }
+
+        public void StateUpdate()
+        {
+            PlayerHPText.text = _playerHealth.ToString();
+            EnemyHPText.text = _enemyCurrentHealth.ToString();
+        }
+
+        public void PlayerAction(Dictionary<int, int> gains)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (gains.ContainsKey(i))
+                {
+                    if (i == 0)
+                    {
+                        _upgradePoint += gains[i];
+                        Debug.Log(_upgradePoint);
+                    }
+                    else if (i == 1)
+                    {
+                        for (int j = 0; j < gains[i]; j++)
+                        {
+                            if (_avoidability > 0)
+                            {
+                                _avoidability *= 0.9f;
+                                
+                            }
+                            else
+                            {
+                                _avoidability = 0.9f * (1 - _avoidability);
+                            }
+
+                            Debug.Log(_avoidability);
+                        }
+                    }
+                    else if (i == 2)
+                    {
+                        _playerAttack = gains[i];
+                        Debug.Log(_playerAttack);
+                        
+                    }
+                }
+            }
+
+
+        }
+
     }
 }

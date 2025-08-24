@@ -18,6 +18,8 @@ public class MachineModel
     public SymbolView symbolPrefab;
 
     private SlotView _slotView;
+    
+    public BattleManager BattleManager;
 
     
 
@@ -169,8 +171,7 @@ public class MachineModel
             
         }
         Debug.Log(string.Join(",", gains));
-        //Debug.Log(string.Join(",", Bingos));
-        //Send gain values
+        BattleManager.PlayerAction(gains);
     }
         
     

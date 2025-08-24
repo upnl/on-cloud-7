@@ -12,9 +12,13 @@ namespace OnCloud7
         public ChangeSymbolView changeSymbolPrefab;
         public AddSymbolView addSymbolPrefab;
         public RemoveSymbolView removeSymbolPrefab;
+        
+        [SerializeField] private BattleManager _battleManager;
 
         public void Initialize(MachineModel machineModel)
-        { _machineModel = machineModel;
+        { 
+            machineModel.BattleManager = _battleManager;
+            _machineModel = machineModel;
             for (int i = 0; i < 9; i++)
             {
                 SymbolView sv = Instantiate(symbolPrefab, transform);
