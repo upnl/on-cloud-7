@@ -458,7 +458,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < _upgradeViews.Count; i++)
         {
-            int selectedNameIndex = Util.Random.Next(nameCandidates.Count);
+            int selectedNameIndex = Util.Random.Next(nameCandidates[upgradeGrade[i]].Count);
             var list = candidates[upgradeGrade[i]][nameCandidates[upgradeGrade[i]][selectedNameIndex]];
             _upgradeViews[i].Initialize(list[Util.Random.Next(list.Count)]);
             nameCandidates[upgradeGrade[i]].RemoveAt(selectedNameIndex);
