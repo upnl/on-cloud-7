@@ -11,4 +11,27 @@ ID	Type	IsImmutable	Arg0	Arg1	Arg2	Arg3	Name	Description
 9	Add	false	[0,1]	[0,1,2,777,7777]	[1,2]		수용	{0}번 사념체에 {1s} 문양을 {2}개 추가합니다.
 10	Remove	false	[0,1]	[0,1,2,777,7777]	[1]		절제	{0}번 사념체에 들어있는 {1s} 문양을 {2}개 제거합니다.
 777	Pronoun	true					임의의 기본	
+7770	Pronoun	true					무지개 문양을 제외한 임의의 특수	
 7777	Pronoun	true					임의의 특수	
+8007	Pronoun	true					0번 사념체의 눈 문양을 줄이는 임의의 절제 또는 변화	
+8017	Pronoun	true					0번 사념체의 클라우드 문양을 줄이는 임의의 절제 또는 변화	
+8027	Pronoun	true					0번 사념체의 상승 기류 문양을 줄이는 임의의 절제 또는 변화	
+8067	Pronoun	true					0번 사념체의 특수 문양을 줄이는 임의의 절제 또는 변화	
+8107	Pronoun	true					1번 사념체의 눈 문양을 줄이는 임의의 절제 또는 변화	
+8117	Pronoun	true					1번 사념체의 클라우드 문양을 줄이는 임의의 절제 또는 변화	
+8127	Pronoun	true					1번 사념체의 상승 기류 문양을 줄이는 임의의 절제 또는 변화	
+8707	Pronoun	true					눈 문양을 줄이는 임의의 절제 또는 변화	
+8717	Pronoun	true					클라우드 문양을 줄이는 임의의 절제 또는 변화	
+8727	Pronoun	true					상승 기류 문양을 줄이는 임의의 절제 또는 변화	
+8767	Pronoun	true					특수 문양을 줄이는 임의의 절제 또는 변화	
+9070	Pronoun	true					0번 사념체의 눈 문양을 늘리는 임의의 수용 또는 변화 	
+9071	Pronoun	true					0번 사념체의 클라우드 문양을 늘리는 임의의 수용 또는 변화	
+9072	Pronoun	true					0번 사념체의 상승 기류 문양을 늘리는 임의의 수용 또는 변화	
+9170	Pronoun	true					1번 사념체의 눈 문양을 늘리는 임의의 수용 또는 변화 	
+9171	Pronoun	true					1번 사념체의 클라우드 문양을 늘리는 임의의 수용 또는 변화	
+9172	Pronoun	true					1번 사념체의 상승 기류 문양을 늘리는 임의의 수용 또는 변화	
+9176	Pronoun	true					1번 사념체의 특수 문양을 늘리는 임의의 수용 또는 변화	
+9770	Pronoun	true					눈 문양을 늘리는 임의의 수용 또는 변화	
+9771	Pronoun	true					클라우드 문양을 늘리는 임의의 수용 또는 변화	
+9772	Pronoun	true					상승 기류 문양을 늘리는 임의의 수용 또는 변화	
+9776	Pronoun	true					특수 문양을 늘리는 임의의 수용 또는 변화	

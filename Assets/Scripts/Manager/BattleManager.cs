@@ -212,9 +212,9 @@ namespace OnCloud7
             {
                 case < 25:
                     return 0;
-                case < 50:
+                case < 70:
                     return 1;
-                case < 200:
+                case < 250:
                     return 2;
                 default:
                     return 3;

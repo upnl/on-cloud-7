@@ -12,10 +12,10 @@ using Random = System.Random;
 public class MachineModel
 {
     private int _id;
-    private List<SymbolModel> _symbolPool = new List<SymbolModel>();
+    private readonly List<SymbolModel> _symbolPool = new List<SymbolModel>();
     public int ID => _id;
     public List<SymbolModel> SymbolPool => _symbolPool;
-    private List<SymbolModel> _result = new List<SymbolModel>();
+    private readonly List<SymbolModel> _result = new List<SymbolModel>();
     public List<SymbolModel> Result => _result;
     public SymbolView symbolPrefab;
 
@@ -28,7 +28,7 @@ public class MachineModel
     public void Initialize(int id)
     {
         _id = id;
-        _symbolPool = new List<SymbolModel>();
+        _symbolPool.Clear();
         int normalCount = _id == 0 ? 6 : 3;
         for (int i = 0; i < 3; i++)
         {
@@ -62,9 +62,8 @@ public class MachineModel
             _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[Util.Random.Next(72, 82)]));
         }
 
-        _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[6]));
         _symbolPool.Add(new SymbolModel(GameManager.Instance.SymbolTemplates[7]));
-        _result = new List<SymbolModel>();
+        _result.Clear();
 
         _symbolPool.Sort();
     }

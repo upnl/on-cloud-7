@@ -76,7 +76,7 @@ namespace OnCloud7
                 case UpgradeType.Add:
                     GameManager.Instance.AddRequest(ArgValue1, ArgValue2, ArgValue0);
                     if (ArgValue3 >= 0)
-                        GameManager.Instance.AddRequest(Util.SymbolIDToIndex(ArgValue3), ArgValue4, ArgValue0);
+                        GameManager.Instance.AddRequest(ArgValue3, ArgValue4, ArgValue0);
                     break;
                 case UpgradeType.Change:
                     GameManager.Instance.ChangeRequest(ArgValue1, ArgValue2, ArgValue3, ArgValue0);

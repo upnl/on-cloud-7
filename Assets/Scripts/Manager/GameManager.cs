@@ -161,6 +161,22 @@ public class GameManager : MonoBehaviour
         for (int rep = 0; rep < repeat; rep++)
         {
             afterSymbolIndex = Util.SymbolIDToIndex(afterSymbolID);
+            
+            changeIndexPool.Clear();
+            for (int i = 0; i < symbolPool.Count; i++)
+            {
+                if (Util.SymbolPredicate(targetSymbolID, symbolPool[i]))
+                {
+                    changeIndexPool.Add(i);
+                }
+            }
+
+            if (changeIndexPool.Count > 0)
+            {
+                int changeIndex = changeIndexPool[r.Next(changeIndexPool.Count)];
+                _machines[machineID].ChangeSymbol(changeIndex, afterSymbolIndex);
+            }
+            /*
             switch (targetSymbolID)
             {
                 case >= 0 and <= 2:
@@ -234,6 +250,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
+            */
         }
     }
 
@@ -282,6 +299,21 @@ public class GameManager : MonoBehaviour
 
         void Remove(int targetSymbolID)
         {
+            removeIndexPool.Clear();
+            for (int i = 0; i < symbolPool.Count; i++)
+            {
+                if (Util.SymbolPredicate(targetSymbolID, symbolPool[i]))
+                {
+                    removeIndexPool.Add(i);
+                }
+            }
+
+            if (removeIndexPool.Count > 0)
+            {
+                int removeIndex = removeIndexPool[r.Next(removeIndexPool.Count)];
+                _machines[machineID].RemoveSymbol(removeIndex);
+            }
+            /*
             switch (targetSymbolID)
             {
                 case >= 0 and <= 2:
@@ -358,6 +390,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
+            */
         }
     }
 
