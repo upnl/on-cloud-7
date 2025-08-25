@@ -333,7 +333,7 @@ namespace OnCloud7
             {
                 // 플레이어 사망
                 Debug.Log("Death");
-                _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜세요.)", _statusText.text);
+                _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.", _statusText.text);
                 GameManager.Instance.BackButtonText.SetText("패배!");
                 GameManager.Instance.SetBackButtonInteractable(true);
                 return true;
