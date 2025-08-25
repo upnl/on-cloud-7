@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _upgradePanel;
     [SerializeField] private GameObject _gameOver;
     [SerializeField] private List<UpgradeView> _upgradeViews;
+    [SerializeField] private GameObject _showMachinePanel;
+    [SerializeField] private List<MachineView> _showMachineViews;
     
     private int curMachineIndex;
 
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
             machine.Initialize(i);
             _machines.Add(machine);
             _machineViews[i].Initialize(machine);
+            _showMachineViews[i].Initialize(machine);
         }
         
     }
@@ -85,6 +88,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < _machines.Count; i++)
         {
             _machineViews[i].CleanPool();
+            _showMachineViews[i].CleanPool();
         }
         this.curMachineIndex = curMachineIndex;
         _machineChoice.SetActive(false);
@@ -92,6 +96,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(true);
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(false);
+        _showMachinePanel.SetActive(false);
         _slotView.Initialize(_machines[curMachineIndex]);
         Spin();
     }
@@ -128,14 +133,26 @@ public class GameManager : MonoBehaviour
             _machineLaunch.SetActive(false);
             _upgradePanel.SetActive(false);
             _gameOver.SetActive(false);
+            _showMachinePanel.SetActive(false);
             for (int i = 0; i < _machines.Count; i++)
             {
                 _machines[i].SymbolPool.Sort();
                 _machineViews[i].Initialize(_machines[i]);
+                _showMachineViews[i].Initialize(_machines[i]);
             }
 
             BattleManager.SetNextEnemyAttackText();
         }
+    }
+
+    public void ShowMachinePanel()
+    {
+        _showMachinePanel.SetActive(true);
+    }
+
+    public void CloseMachinePanel()
+    {
+        _showMachinePanel.SetActive(false);
     }
 
     public void GameOver()
@@ -144,6 +161,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(false);
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(true);
+        _showMachinePanel.SetActive(false);
         
     }
 
@@ -398,6 +416,7 @@ public class GameManager : MonoBehaviour
     {
         _machines[machineID].Initialize(machineID);
         _machineViews[machineID].Initialize(_machines[machineID]);
+        _showMachineViews[machineID].Initialize(_machines[machineID]);
     }
 
     public async UniTask RoundUpgrade(int upgradeGrade)
@@ -406,6 +425,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(false);
         _upgradePanel.SetActive(true);
         _gameOver.SetActive(false);
+        _showMachinePanel.SetActive(false);
         UpgradeCompleted = false;
         Dictionary<string, List<RoundUpgradeTemplate>> candidates = new();
         List<string> nameCandidates = new();
