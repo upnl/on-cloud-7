@@ -107,7 +107,7 @@ namespace OnCloud7
             }
             else
             {
-                await GameManager.Instance.RoundUpgrade(1);
+                await GameManager.Instance.RoundUpgrade(new() { 1, 1, 1 });
             }
             _round++;
             EnemyCurrentHealth = _enemyTemplate.Health;
@@ -206,18 +206,30 @@ namespace OnCloud7
             }
         }
 
-        private int UpgradeLevel(int upgradePoint)
+        private List<int> UpgradeLevel(int upgradePoint)
         {
             switch (upgradePoint)
             {
                 case < 25:
-                    return 0;
+                    return new() { 0, 0, 0 };
+                case < 35:
+                    return new() { 1, 0, 0 };
+                case < 50:
+                    return new() { 1, 1, 0 };
                 case < 70:
-                    return 1;
+                    return new() { 1, 1, 1 };
+                case < 100:
+                    return new() { 2, 1, 1 };
+                case < 150:
+                    return new() { 2, 2, 1 };
+                case < 200:
+                    return new() { 2, 2, 2 };
                 case < 250:
-                    return 2;
+                    return new() { 3, 2, 2 };
+                case < 300:
+                    return new() { 3, 3, 2 };
                 default:
-                    return 3;
+                    return new() { 3, 3, 3 };
             }
         }
 /*

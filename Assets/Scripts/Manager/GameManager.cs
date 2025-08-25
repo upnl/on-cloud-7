@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < _machines.Count; i++)
         {
             _machineViews[i].CleanPool();
-            _showMachineViews[i].CleanPool();
         }
         this.curMachineIndex = curMachineIndex;
         _machineChoice.SetActive(false);
@@ -138,7 +137,6 @@ public class GameManager : MonoBehaviour
             {
                 _machines[i].SymbolPool.Sort();
                 _machineViews[i].Initialize(_machines[i]);
-                _showMachineViews[i].Initialize(_machines[i]);
             }
 
             BattleManager.SetNextEnemyAttackText();
@@ -147,6 +145,12 @@ public class GameManager : MonoBehaviour
 
     public void ShowMachinePanel()
     {
+        for (int i = 0; i < _machines.Count; i++)
+        {
+            _showMachineViews[i].CleanPool();
+            _showMachineViews[i].Initialize(_machines[i]);
+        }
+
         _showMachinePanel.SetActive(true);
     }
 
@@ -416,10 +420,9 @@ public class GameManager : MonoBehaviour
     {
         _machines[machineID].Initialize(machineID);
         _machineViews[machineID].Initialize(_machines[machineID]);
-        _showMachineViews[machineID].Initialize(_machines[machineID]);
     }
 
-    public async UniTask RoundUpgrade(int upgradeGrade)
+    public async UniTask RoundUpgrade(List<int> upgradeGrade)
     {
         _machineChoice.SetActive(false);
         _machineLaunch.SetActive(false);
@@ -427,26 +430,25 @@ public class GameManager : MonoBehaviour
         _gameOver.SetActive(false);
         _showMachinePanel.SetActive(false);
         UpgradeCompleted = false;
-        Dictionary<string, List<RoundUpgradeTemplate>> candidates = new();
-        List<string> nameCandidates = new();
-        
+        Dictionary<int, Dictionary<string, List<RoundUpgradeTemplate>>> candidates = new();
+        Dictionary<int, List<string>> nameCandidates = new();
+
         foreach (var template in RoundUpgradeTemplates)
         {
-            if (template.Level == upgradeGrade)
-            {
-                candidates.TryAdd(template.Name, new List<RoundUpgradeTemplate>());
-                candidates[template.Name].Add(template);
-                if (!nameCandidates.Contains(template.Name))
-                    nameCandidates.Add(template.Name);
-            }
+            candidates.TryAdd(template.Level, new Dictionary<string, List<RoundUpgradeTemplate>>());
+            candidates[template.Level].TryAdd(template.Name, new List<RoundUpgradeTemplate>());
+            candidates[template.Level][template.Name].Add(template);
+            nameCandidates.TryAdd(template.Level, new List<string>());
+            if (!nameCandidates[template.Level].Contains(template.Name))
+                nameCandidates[template.Level].Add(template.Name);
         }
-        
+
         for (int i = 0; i < _upgradeViews.Count; i++)
         {
             int selectedNameIndex = Util.Random.Next(nameCandidates.Count);
-            var list = candidates[nameCandidates[selectedNameIndex]];
+            var list = candidates[upgradeGrade[i]][nameCandidates[upgradeGrade[i]][selectedNameIndex]];
             _upgradeViews[i].Initialize(list[Util.Random.Next(list.Count)]);
-            nameCandidates.RemoveAt(selectedNameIndex);
+            nameCandidates[upgradeGrade[i]].RemoveAt(selectedNameIndex);
         }
 
         await UniTask.WaitUntil(this, (t) => t.UpgradeCompleted);
