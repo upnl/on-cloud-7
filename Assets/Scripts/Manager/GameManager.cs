@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using OnCloud7;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -44,11 +45,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _gameOver;
     [SerializeField] private List<UpgradeView> _upgradeViews;
     [SerializeField] private GameObject _showMachinePanel;
+    [SerializeField] private Button _showMachineButton;
     [SerializeField] private List<MachineView> _showMachineViews;
     
     private int curMachineIndex;
 
     [SerializeField] private Button _backButton;
+    [SerializeField] private TextMeshProUGUI _backButtonText;
+    
+    public TextMeshProUGUI BackButtonText => _backButtonText;
     
     public bool UpgradeCompleted { private get; set; }
 
@@ -95,6 +100,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(true);
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(false);
+        _showMachineButton.gameObject.SetActive(true);
         _showMachinePanel.SetActive(false);
         _slotView.Initialize(_machines[curMachineIndex]);
         Spin();
@@ -132,6 +138,7 @@ public class GameManager : MonoBehaviour
             _machineLaunch.SetActive(false);
             _upgradePanel.SetActive(false);
             _gameOver.SetActive(false);
+            _showMachineButton.gameObject.SetActive(false);
             _showMachinePanel.SetActive(false);
             for (int i = 0; i < _machines.Count; i++)
             {
@@ -166,7 +173,12 @@ public class GameManager : MonoBehaviour
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(true);
         _showMachinePanel.SetActive(false);
-        
+        _showMachineButton.gameObject.SetActive(true);
+    }
+
+    public void BackToTitleScene()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void ChangeRequest(SymbolModel targetSymbol, int machineID)
@@ -428,6 +440,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(false);
         _upgradePanel.SetActive(true);
         _gameOver.SetActive(false);
+        _showMachineButton.gameObject.SetActive(true);
         _showMachinePanel.SetActive(false);
         UpgradeCompleted = false;
         Dictionary<int, Dictionary<string, List<RoundUpgradeTemplate>>> candidates = new();

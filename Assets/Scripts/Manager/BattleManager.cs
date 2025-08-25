@@ -118,6 +118,7 @@ namespace OnCloud7
 
             _upgradePoint = 0;
             _statusText.SetText("전투를 시작합니다!");
+            GameManager.Instance.BackButtonText.SetText("다음 턴!");
             GameManager.Instance.BackToChoice();
         }
 
@@ -324,6 +325,7 @@ namespace OnCloud7
                 // 적 처치
                 // GameManager의 BackToChoice() 호출 시 다음 라운드로 넘어감
                 _statusText.SetTextFormat("{0}\n{1}의 벽을 넘었다!!", _statusText.text, _enemyTemplate.Name);
+                GameManager.Instance.BackButtonText.SetText("깨달음 선택!");
                 GameManager.Instance.SetBackButtonInteractable(true);
                 return true;
             }
@@ -332,6 +334,8 @@ namespace OnCloud7
                 // 플레이어 사망
                 Debug.Log("Death");
                 _statusText.SetTextFormat("{0}\n으으윽... 내가 쓰러지다니.\n(게임을 껐다 켜세요.)", _statusText.text);
+                GameManager.Instance.BackButtonText.SetText("패배!");
+                GameManager.Instance.SetBackButtonInteractable(true);
                 return true;
             }
 
