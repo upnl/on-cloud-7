@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _machineLaunch;
     [SerializeField] private GameObject _upgradePanel;
     [SerializeField] private GameObject _gameOver;
+    [SerializeField] private GameObject _win;
     [SerializeField] private List<UpgradeView> _upgradeViews;
     [SerializeField] private GameObject _showMachinePanel;
     [SerializeField] private Button _showMachineButton;
@@ -100,6 +101,7 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(true);
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(false);
+        _win.SetActive(false);
         _showMachineButton.gameObject.SetActive(true);
         _showMachinePanel.SetActive(false);
         _slotView.Initialize(_machines[curMachineIndex]);
@@ -126,6 +128,11 @@ public class GameManager : MonoBehaviour
         SetBackButtonInteractable(false);
         if (BattleManager.EnemyCurrentHealth <= 0)
         {
+            if (BattleManager.Round == 7)
+            {
+                Win();
+                return;
+            }
             BattleManager.LoadNextRound().Forget();
         }
         else if (BattleManager.PlayerHealth <= 0)
@@ -138,6 +145,7 @@ public class GameManager : MonoBehaviour
             _machineLaunch.SetActive(false);
             _upgradePanel.SetActive(false);
             _gameOver.SetActive(false);
+            _win.SetActive(false);
             _showMachineButton.gameObject.SetActive(false);
             _showMachinePanel.SetActive(false);
             for (int i = 0; i < _machines.Count; i++)
@@ -172,6 +180,18 @@ public class GameManager : MonoBehaviour
         _machineLaunch.SetActive(false);
         _upgradePanel.SetActive(false);
         _gameOver.SetActive(true);
+        _win.SetActive(false);
+        _showMachinePanel.SetActive(false);
+        _showMachineButton.gameObject.SetActive(true);
+    }
+
+    public void Win()
+    {
+        _machineChoice.SetActive(false);
+        _machineLaunch.SetActive(false);
+        _upgradePanel.SetActive(false);
+        _gameOver.SetActive(false);
+        _win.SetActive(true);
         _showMachinePanel.SetActive(false);
         _showMachineButton.gameObject.SetActive(true);
     }

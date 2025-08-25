@@ -22,6 +22,8 @@ namespace OnCloud7
         /// 몇 라운드인가? (1 ~ 7)
         /// </summary>
         private int _round;
+
+        public int Round => _round;
         
         /// <summary>
         /// 플레이어 남은 체력 (라운드
@@ -323,6 +325,13 @@ namespace OnCloud7
             if (EnemyCurrentHealth <= 0)
             {
                 // 적 처치
+                if (_round == 7)
+                {
+                    _statusText.SetTextFormat("{0}\n{1}의 벽 너머 그곳은...\n일곱 번째 구름 위.\n최선을 다해 사랑했고\n최선을 다해 살았노라.", _statusText.text, _enemyTemplate.Name);
+                    GameManager.Instance.BackButtonText.SetText("승리!");
+                    GameManager.Instance.SetBackButtonInteractable(true);
+                    return true;
+                }
                 // GameManager의 BackToChoice() 호출 시 다음 라운드로 넘어감
                 _statusText.SetTextFormat("{0}\n{1}의 벽을 넘었다!!", _statusText.text, _enemyTemplate.Name);
                 GameManager.Instance.BackButtonText.SetText("깨달음 선택!");
